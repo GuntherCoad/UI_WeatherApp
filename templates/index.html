@@ -16,12 +16,19 @@
         </div>
     <br>
         <div class="search-content">
-            <input type="search" id="query" onkeyup="getWeather(5)" name="q" placeholder="Search...">
-            <button id="querySearch" >Search</button>
+            <div class="row">
+                <input class="input" type="text" id="query" name="q" placeholder="Search...">
+                <button id="querySearch" >Search</button>
+            </div>
+            <div class="search-results" id="results">
+                <ul>
+                    <li>San Antonio, Tx</li>
+                    <li>Bismarck, ND</li>
+                </ul>
+            </div>
         </div>
-        <div class="search-results" id="results">
+        
 
-        </div>
 
     <br>
         <div id="row" style="width:50%">
@@ -51,7 +58,7 @@
             <p></p>
         </div>
     </center>
-    <template search-result-template>
+    <template id="search-result-template">
         <div class="card">
             <div class="heading" id="data-header"></div>
             <div class="body" id="data-body"></div>
