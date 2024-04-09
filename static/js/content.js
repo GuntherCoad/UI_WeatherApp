@@ -1,7 +1,8 @@
 const apiKEY = "27eedd9e3f839130d3c83e4b0ed69202";
 const apiENDPOINT = "api.openweathermap.org"
 const weatherResultTemplate = document.getElementById("search-result-template");
-
+const query = document.getElementById("query");
+const resultbox = document.getElementById("results");
 
 /**
  * @description takes parameter limit. This displays "limit" number of locations related to the value in the search box. 
@@ -17,13 +18,31 @@ function getWeather(limit)
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${search.value}&limit=${limit}&appid=${apiKEY}`)
     .then(res => res.json())
     .then(data => {
-        data.forEach(element => {
-            var card = weatherResultTemplate.content.cloneNode(true).children;
-            card.getElementById("data-header").innerHTML = element.name;
-            
-        });
-            
-        
+        displayResult(data);
+        console.log(data);
+      
     })
     .catch(error => console.error(error));
 }
+
+function displayResult(result) {
+    const content = result.flatMap((list)=> {
+        if(list.country.match(/US/))            //matching US country code
+        {
+            return "<li>" + list.name + ", " + list.state + " </li>";
+        }
+        else
+            return [];
+    });
+
+    if(content.length > 0)
+    {
+        resultbox.innerHTML = "<ul>" + content.join("") + "</ul>";
+    }
+    else
+        resultbox.innerHTML = "";
+}
+
+query.addEventListener('keyup', function () {
+    getWeather(5);
+}, 'false');
