@@ -3,64 +3,71 @@
     <title>UIWeatherApp</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body style="background-image: linear-gradient(#4059AD,yellow);">
-    <center>
-        <header>
-            <h1>Weather App</h1>
-        </header>
-    <br>
-        <div id="bround">
-            <center>
-                <h2 style="font-size: 3vw">Static Weather Radar</h2>
-            </center>
-        </div>
-    <br>
-        <div class="search-content">
-            <div class="row">
-                <input class="input" type="text" id="query" name="q" placeholder="Search..." autocomplete="off">
-                <button id="querySearch" >Search</button>
-            </div>
-            <div class="search-results" id="results">
-                
-            </div>
-        </div>
+<body>
+    <div class="home">
+                <header>
+                    <h1>Weather App</h1>
+                </header>
+            <br>
+                <div id="bround">
+                    <center>
+                        <h2 style="font-size: 3vw">Static Weather Radar</h2>
+                    </center>
+                </div>
+            <br>
+                <div class="search-content">
+                    <div class="row">
+                        <input class="input" type="text" id="query" name="q" placeholder="Search..." autocomplete="off">
+                        <button id="querySearch" >Search</button>
+                    </div>
+                    <div class="search-results" id="results">
+                        
+                    </div>
+                </div>
         
 
-
-    <br>
-        <div id="row" style="width:50%">
-            <a href="/temp">
-            <div id="column">Witchita, Kansas</div>
-            </a>
-            <div id="column"><img src="/static/images/cloudy.png" style="width: 33.33%" style="height: 50%"></div>
-            <div id="column">Hi, Lo</div>
+        
+            <div id="row" style="width:50%">
+                <a href="/temp">
+                <div id="column">Witchita, Kansas</div>
+                </a>
+                <div id="column"><img src="/static/images/cloudy.png" style="width: 33.33%" style="height: 50%"></div>
+                <div id="column">Hi, Lo</div>
+            </div>
+            <div id="row" style="width:50%">
+                <a href="/temp">
+                <div id="column">San Antonio, Texas</div>
+                </a>
+                <div id="column"><img src="/static/images/windy.png" style="width: 33.33%" style="height: 50%"></div>
+                <div id="column">Hi, Lo</div>
+            </div>
+            <div id="row" style="width:50%">
+                <a href="/temp">
+                <div id="column">Lansing, Michigan</div>
+                </a>
+                <div id="column"><img src="/static/images/rain.png" style="width: 33.33%" style="height: 50%"></div>
+                <div id="column">Hi, Lo</div>
+            </div>
+            <div class="alert-danger box">
+                <p></p>
+            </div>
+    </div>
+    <div class="result-weather">
+        <header class="search-header">
+            <div class="search-results-2"></div>
+        </header>
+        <div class="location-weather">
+            <div class="static-info"></div>
+            <div class="dynamic-map"></div>
         </div>
-    <br>
-        <div id="row" style="width:50%">
-            <a href="/temp">
-            <div id="column">San Antonio, Texas</div>
-            </a>
-            <div id="column"><img src="/static/images/windy.png" style="width: 33.33%" style="height: 50%"></div>
-            <div id="column">Hi, Lo</div>
+        <div class="forecast">
+            <div class="forecast-select">
+                
+            </div>
+            <div class="forecast-display"></div>
         </div>
-    <br>
-        <div id="row" style="width:50%">
-            <a href="/temp">
-            <div id="column">Lansing, Michigan</div>
-            </a>
-            <div id="column"><img src="/static/images/rain.png" style="width: 33.33%" style="height: 50%"></div>
-            <div id="column">Hi, Lo</div>
-        </div>
-        <div class="alert-danger box">
-            <p></p>
-        </div>
-    </center>
-    <template id="search-result-template">
-        <div class="card">
-            <div class="heading" id="data-header"></div>
-            <div class="body" id="data-body"></div>
-        </div>
-    </template>
-    <script src="/static/js/content.js"></script>
+    </div>
+    
 </body>
+<script src="/static/js/content.js"></script>
 </html>

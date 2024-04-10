@@ -8,7 +8,7 @@
 body{
     margin: 0;
     padding: 0;
-    background: #262a2f;
+    background: #fff;
     color: #333;
 
 }
@@ -32,6 +32,7 @@ header{
     font-size: 2vw;
 }
 #row:after{
+    padding: 50px;
     content:"";
     display: table;
     clear: both;
@@ -80,3 +81,56 @@ header{
     background: #e9f3ff;
 }
 /*Search css end*/
+
+/*Result page css Start*/
+.result-weather {
+    display: none;
+    height: 100%;
+}
+
+.result-weather .search-header {
+    background: #262a2f;
+    height: 5.5%;
+}
+
+.result-weather .location-weather {
+    display: flex;
+    height: 50%;
+    width: 100%;
+    
+}
+
+.location-weather .static-info {
+    flex: 1;
+    height: 50%;
+    background: #bd1616;
+    margin: 10px 5px 0 10px;
+    border-radius: 4px;
+}
+
+.location-weather .dynamic-map {
+    height: 50%;
+    flex: 1;
+    background: #1077f5;
+    margin: 10px 10px 0 5px;
+    border-radius: 4px;
+}
+
+.result-weather .forecast {
+    height: 44.5%;
+}
+
+.forecast .forecast-select {
+    height: 15%;
+    width: 10%;
+    background: #333;
+    margin: 0 0 1% 5%;
+}
+
+.forecast .forecast-display {
+    height: 80.5%;
+    width: 100%;
+    background: #6b3572;
+    margin: 0 0 0 0;
+}
+/*Result page css End*/
