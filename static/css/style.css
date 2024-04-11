@@ -38,6 +38,10 @@ header{
     clear: both;
 }
 
+.home {
+    display:block ;
+}
+
 /*Search css start*/
 
 .search-content {

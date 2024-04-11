@@ -32,10 +32,15 @@ function getSearchResults(limit)
  * @param {*} result The json list of relevant search items from the api response.
  */
 function displayResult(result) {
+    
     const content = result.flatMap((list)=> {
+        var iterat = 0;
         if(list.country.match(/US/))            //matching US country code
         {
-            return "<li>" + list.name + ", " + list.state + " </li>";
+            console.log(list);
+            setAPICall(list.lon, list.lat)
+            iterat++;
+            return "<li id=" + `item${iterat}` + "><button>" + list.name + ", " + list.state + " </button></li>";
         }
         else
             return [];
@@ -49,6 +54,23 @@ function displayResult(result) {
         resultbox.innerHTML = "";
 }
 
+/**
+ * @description grabs the information for the API call from within displayResult(). Will be used when selecting one of the search results to display.
+ */
+function setAPICall(lon, lat)
+{
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKEY}&units=imperial`)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+      
+    })
+    .catch(error => console.error(error));
+}
+
+/**
+ * @description Hides the home page elements and displays the result page elements upon pressing the submit button.
+ */
 function onSearch() {
     const homeElem = document.getElementsByClassName("home");
     const resultElem = document.getElementsByClassName("result-weather");
@@ -58,10 +80,7 @@ function onSearch() {
     for(const element of resultElem) {
         element.setAttribute("style", "display:block");
     }
-
-        console.log(resultElem);
-        console.log(homeElem);
-    }
+}
     
 
 query.addEventListener('keyup', function () {
