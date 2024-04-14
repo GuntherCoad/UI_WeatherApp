@@ -2,7 +2,7 @@ import requests
 from config import API_WEATHER_URL
 from location import get_current_location
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, render_template, request, 
 )
 
 bp = Blueprint('weather', __name__, url_prefix='/weather')
