@@ -21,7 +21,7 @@ def forecast():
 
     if data:
         return render_template('forecast.html', forecast=data['daily'], 
-                           days=data['daily']['time'])
+                           days=data['daily']['time'], zip=zip)
     else:
         return "Failed toretrieve data"
 
