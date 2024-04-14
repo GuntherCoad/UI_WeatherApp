@@ -37,35 +37,22 @@ function displayResult(result) {
         
         if(list.country.match(/US/))            //matching US country code
         {
-            //console.log(list);
-            //setAPICall(list.lon, list.lat)
             iterat++;
-            const resultHTML =  "<li id=" + `item${iterat}` + "><button>" + list.name + ", " + list.state + " </button></li>";
+            const resultHTML =  "<li id=\"" + `item${iterat}` + "\" onclick= \"setAPICall(" + `${list.lon}, ${list.lat}` + 
+                                ")\"><button>" + list.name + ", " + list.state + " </button></li>";
             return resultHTML;
         }
         else
+        {
             return [];
+        }
     });
 
-    //document.getElementById(`item${iterat - 1}`).setAttribute("onclick", "setAPICall(" + `${list.lon},${list.lat}` + ")");
-    //code snippet needs to be looped outside of content
-    //prob in if statement
-
+    //idea: could grab result boxes by class in order to generalize the function
+    //will make the results show in two result boxes, one is hidden at a given time though
     if(content.length > 0)
     {
         resultbox.innerHTML = "<ul>" + content.join("") + "</ul>";
-        for(i = 0; i < 5; i++)
-        {
-            const currItem = document.getElementById(`item${i}`);
-            if(currItem == null)
-            {
-                continue;
-            }
-            else
-            {
-                currItem.setAttribute("onclick","setAPICall(" + `${content[i].lon},${content[i].lat}` + ")")
-            }
-        }
     }
     else
         resultbox.innerHTML = "";
@@ -80,7 +67,7 @@ function setAPICall(lon, lat)
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKEY}&units=imperial`)
     .then(res => res.json())
     .then(data => {
-        //log(data);
+        console.log(data);
       
     })
     .catch(error => console.error(error));
