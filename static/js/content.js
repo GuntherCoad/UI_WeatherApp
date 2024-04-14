@@ -20,7 +20,7 @@ function getSearchResults(limit)
     .then(res => res.json())
     .then(data => {
         displayResult(data);
-        console.log(data);
+        //console.log(data);
       
     })
     .catch(error => console.error(error));
@@ -32,23 +32,40 @@ function getSearchResults(limit)
  * @param {*} result The json list of relevant search items from the api response.
  */
 function displayResult(result) {
-    
+    var iterat = 0;
     const content = result.flatMap((list)=> {
-        var iterat = 0;
+        
         if(list.country.match(/US/))            //matching US country code
         {
-            console.log(list);
-            setAPICall(list.lon, list.lat)
+            //console.log(list);
+            //setAPICall(list.lon, list.lat)
             iterat++;
-            return "<li id=" + `item${iterat}` + "><button>" + list.name + ", " + list.state + " </button></li>";
+            const resultHTML =  "<li id=" + `item${iterat}` + "><button>" + list.name + ", " + list.state + " </button></li>";
+            return resultHTML;
         }
         else
             return [];
     });
 
+    //document.getElementById(`item${iterat - 1}`).setAttribute("onclick", "setAPICall(" + `${list.lon},${list.lat}` + ")");
+    //code snippet needs to be looped outside of content
+    //prob in if statement
+
     if(content.length > 0)
     {
         resultbox.innerHTML = "<ul>" + content.join("") + "</ul>";
+        for(i = 0; i < 5; i++)
+        {
+            const currItem = document.getElementById(`item${i}`);
+            if(currItem == null)
+            {
+                continue;
+            }
+            else
+            {
+                currItem.setAttribute("onclick","setAPICall(" + `${content[i].lon},${content[i].lat}` + ")")
+            }
+        }
     }
     else
         resultbox.innerHTML = "";
@@ -56,13 +73,14 @@ function displayResult(result) {
 
 /**
  * @description grabs the information for the API call from within displayResult(). Will be used when selecting one of the search results to display.
+ * @requires function displayResult()
  */
 function setAPICall(lon, lat)
 {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKEY}&units=imperial`)
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        //log(data);
       
     })
     .catch(error => console.error(error));
