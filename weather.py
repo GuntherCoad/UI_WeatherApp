@@ -14,8 +14,11 @@ def current():
         long = request.form['longitude']
     else:
         loc_data = get_current_location()
-        lati = loc_data[0]
-        long = loc_data[1]
+        lati = float(loc_data[0])
+        long = float(loc_data[1])
+
+        print(lati)
+        print(long)
 
     data = get_current_weather(lati, long)
 
