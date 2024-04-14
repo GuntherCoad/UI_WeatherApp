@@ -29,7 +29,6 @@ def get_current_weather(latitude, longitude):
     	"latitude":  latitude,
     	"longitude": longitude,
     	"current_weather": "True",
-        "temperature_unit": "fahrenheit",
         "temperature_unit": "celsius",
     }
     response = requests.get(API_WEATHER_URL, params=params)
