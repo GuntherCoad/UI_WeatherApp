@@ -1,4 +1,6 @@
 import requests
+from config import API_WEATHER_URL
+from location import get_current_location
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
@@ -11,15 +13,15 @@ def current():
         lati = request.form['latitude']
         long = request.form['longitude']
     else:
-        lati = 0
-        long = 0
+        loc_data = get_current_location()
+        lati = loc_data[0]
+        long = loc_data[1]
 
     data = get_current_weather(lati, long)
 
     return render_template('weather.html', data=data)
 
 def get_current_weather(latitude, longitude):
-    url = "https://api.open-meteo.com/v1/forecast"
     params = {
     	"latitude":  latitude,
     	"longitude": longitude,
@@ -27,7 +29,6 @@ def get_current_weather(latitude, longitude):
         "temperature_unit": "fahrenheit",
         "temperature_unit": "celsius",
     }
-    response = requests.get(url, params=params)
+    response = requests.get(API_WEATHER_URL, params=params)
     weather_data = response.json()
     return weather_data
-    # return render_template('weather.html', weather_data=weather_data)
