@@ -20,7 +20,7 @@ function getSearchResults(limit)
     .then(res => res.json())
     .then(data => {
         displayResult(data);
-        console.log(data);
+        //console.log(data);
       
     })
     .catch(error => console.error(error));
@@ -32,20 +32,24 @@ function getSearchResults(limit)
  * @param {*} result The json list of relevant search items from the api response.
  */
 function displayResult(result) {
-    
+    var iterat = 0;
     const content = result.flatMap((list)=> {
-        var iterat = 0;
+        
         if(list.country.match(/US/))            //matching US country code
         {
-            console.log(list);
-            setAPICall(list.lon, list.lat)
             iterat++;
-            return "<li id=" + `item${iterat}` + "><button>" + list.name + ", " + list.state + " </button></li>";
+            const resultHTML =  "<li id=\"" + `item${iterat}` + "\" onclick= \"setAPICall(" + `${list.lon}, ${list.lat}` + 
+                                ")\"><button>" + list.name + ", " + list.state + " </button></li>";
+            return resultHTML;
         }
         else
+        {
             return [];
+        }
     });
 
+    //idea: could grab result boxes by class in order to generalize the function
+    //will make the results show in two result boxes, one is hidden at a given time though
     if(content.length > 0)
     {
         resultbox.innerHTML = "<ul>" + content.join("") + "</ul>";
@@ -56,6 +60,7 @@ function displayResult(result) {
 
 /**
  * @description grabs the information for the API call from within displayResult(). Will be used when selecting one of the search results to display.
+ * @requires function displayResult()
  */
 function setAPICall(lon, lat)
 {
