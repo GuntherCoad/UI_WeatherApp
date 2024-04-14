@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-
+        
 def create_app(test_config=None):
 
     app = Flask(__name__)
@@ -12,5 +12,8 @@ def create_app(test_config=None):
     @app.route("/temp")
     def temp():
         return render_template("tempPage.html")
+
+    import weather
+    app.register_blueprint(weather.bp)
 
     return app
