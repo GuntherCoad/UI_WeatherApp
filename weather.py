@@ -17,10 +17,16 @@ def current():
         lati = float(loc_data[0])
         long = float(loc_data[1])
 
-        print(lati)
-        print(long)
-
     data = get_current_weather(lati, long)
+    
+    # Extract temperature in Celsius
+    temp_cel = data['current_weather']['temperature']
+
+    # Convert Celsius to Fahrenheit
+    temp_fah = temp_cel * 9/5 + 32
+ 
+    # Add to array
+    data['current_weather']['temperature_fahrenheit'] = temp_fah
 
     return render_template('weather.html', data=data)
 
