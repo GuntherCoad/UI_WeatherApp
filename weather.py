@@ -19,8 +19,11 @@ def forecast():
     
     data = get_forecast(lati, long)
 
-    return render_template('forecast.html', data=data)
-    
+    if data:
+        return render_template('forecast.html', forecast=data['daily'], 
+                           days=data['daily']['time'])
+    else:
+        return "Failed toretrieve data"
 
 @bp.route('/current', methods=('GET', 'POST'))
 def current():
