@@ -7,6 +7,10 @@ from flask import (
 
 bp = Blueprint('weather', __name__, url_prefix='/weather')
     
+@bp.route('/', methods=('GET', 'POST'))
+def home():
+    return render_template('weather.html')
+
 @bp.route('/daily', methods=('GET', 'POST'))
 def forecast():
     if request.method == 'POST':
