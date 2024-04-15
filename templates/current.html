@@ -1,0 +1,14 @@
+{% extends 'weather.html' %}
+
+{% block header %}
+  <h1>{% block title %}Daily{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% if data %}
+        <p>Temperature: {{ data.current_weather.temperature }} °C</p>
+        <p>Temperature: {{ data.current_weather.temperature_fahrenheit }} °F</p>
+        <p>Wind Speed: {{ data.current_weather.windspeed }} m/s</p>
+        <p>Weather Code: {{ data.current_weather.weathercode }}</p>
+    {% endif %}
+{% endblock %}
