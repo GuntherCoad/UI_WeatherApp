@@ -29,7 +29,7 @@ def forecast():
     else:
         return "Failed toretrieve data"
 
-@bp.route('/current', methods=('GET', 'POST'))
+@bp.route('/today', methods=('GET', 'POST'))
 def current():
     if request.method == 'POST':
         lati = request.form['latitude']
