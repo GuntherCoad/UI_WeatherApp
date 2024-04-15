@@ -1,14 +1,27 @@
 {% extends 'weather.html' %}
 
 {% block header %}
-  <h1>{% block title %}Daily{% endblock %}</h1>
+  <h1>{% block title %}7 Day Forecast{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-    {% if data %}
-        <p>Temperature: {{ data.current_weather.temperature }} °C</p>
-        <p>Temperature: {{ data.current_weather.temperature_fahrenheit }} °F</p>
-        <p>Wind Speed: {{ data.current_weather.windspeed }} m/s</p>
-        <p>Weather Code: {{ data.current_weather.weathercode }}</p>
-    {% endif %}
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Max Temperature (°C)</th>
+            <th>Min Temperature (°C)</th>
+            <th>Precipitation (mm)</th>
+            <th>Max Wind Speed (km/h)</th>
+        </tr>
+        {% for day, max_temp, min_temp, precip, max_wind in 
+            zip(days, forecast.temperature_2m_max, forecast.temperature_2m_min, forecast.precipitation_sum, forecast.windspeed_10m_max) %}
+        <tr>
+            <td>{{ day }}</td>
+            <td>{{ max_temp }}</td>
+            <td>{{ min_temp }}</td>
+            <td>{{ precip }}</td>
+            <td>{{ max_wind }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
