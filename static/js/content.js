@@ -83,6 +83,7 @@ function updateWeatherDetails(data) {
     const wind = document.getElementById("wind");
     const rainChance = document.getElementById("rain-chance");
     const humidity = document.getElementById("humidity");
+    const pressure = document.getElementById("pressure");
 
     locationName.innerText = `Location: ${data.name}`;
     temperature.innerText = `Temperature: ${data.main.temp}°F`;
@@ -90,13 +91,14 @@ function updateWeatherDetails(data) {
     wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
     rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
     humidity.innerText = `Humidity: ${data.main.humidity}%`;
+    pressure.innerText = `Pressure: ${data.main.pressure} hPa`;
 
 function loadWeatherRadar(lon,lat) {
     const layer = "precipitation_new";
     const iframe = document.getElementById("weatherRadarFrame");
     iframe.src = `${apiENDPOINT}/weathermap?basemap=map&cities=true&layer=${layer}&lat=${lat}&lon=${lon}&zoom=8&appid=${apiKEY}`;
 
-}
+}}
 function fetchAQIData(lat, lon){
     fetch(`${apiENDPOINT}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
         .then(res => res.json())
@@ -106,20 +108,7 @@ function fetchAQIData(lat, lon){
         })
         .catch(error => console.error('Error fetching AQI data:', error));AnalyserNode
     }
-function onSearch() {
-    const homeElements = document.getElementsByClassName("home");
-    const resultElements = document.getElementsByClassName("result-weather");
 
-    // Hide all elements with class 'home'
-    Array.from(homeElements).forEach(element => {
-        if (element) element.style.display = 'none';
-    });
-
-    // Display all elements with class 'result-weather'
-    Array.from(resultElements).forEach(element => {
-        if (element) element.style.display = 'block';
-    });
-}
 
 function onSearch() {
     const homeElements = document.getElementsByClassName("home");
@@ -136,7 +125,7 @@ function onSearch() {
     });
 }
 
-searchButton.addEventListener('click', function () {
+searchButton.addEventListener('click', function() {
+
     onSearch();
 }, false);
-}
