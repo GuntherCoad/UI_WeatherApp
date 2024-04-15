@@ -1,14 +1,18 @@
 {% extends 'weather.html' %}
 
 {% block header %}
-  <h1>{% block title %}Today's Forecast{% endblock %}</h1>
+<h1>{% block title %}Today's Forecast{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-    {% if data %}
-        <p>Temperature: {{ data.current_weather.temperature }} °C</p>
-        <p>Temperature: {{ data.current_weather.temperature_fahrenheit }} °F</p>
-        <p>Wind Speed: {{ data.current_weather.windspeed }} m/s</p>
-        <p>Weather Code: {{ data.current_weather.weathercode }}</p>
-    {% endif %}
+{% if data %}
+<div id="imageContainer">
+    <img id="image" src="" alt="Image">
+</div>
+<div id="infoContainer">
+    <p id="today_temp">Temperature: {{ data.current_weather.temperature_fahrenheit }} °F</p>
+    <p>Wind Speed: {{ data.current_weather.windspeed }} m/s</p>
+    <p>Weather Code: {{ data.current_weather.weathercode }}</p>
+</div>
+{% endif %}
 {% endblock %}
