@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Weather App</title>
-</head>
-<body>
-    <h1>Weather App</h1>
-    <form method="post">
-        <label for="latitude">Enter latitude:</label>
-        <input type="text" id="latitude" name="latitude">
-        <label for="longitude">Enter longitude:</label>
-        <input type="text" id="longitude" name="longitude">
-        <input type="submit" value="Get Weather">
-    </form>
-    {% if data %}
-        <h2>Current Weather:</h2>
-        <p>Temperature: {{ data.current_weather.temperature }} °C</p>
-        <p>Temperature: {{ data.current_weather.temperature_fahrenheit }} °F</p>
-        <p>Wind Speed: {{ data.current_weather.windspeed }} m/s</p>
-        <p>Weather Code: {{ data.current_weather.weathercode }}</p>
-    {% endif %}
-    {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-    {% endfor %}
-</body>
+    <head>
+        <title>Weather App</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.css') }}">
+    </head>
+    <body>
+        <div class="container-sm">
+            <h1><a href="/weather">Weather App</a></h1>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="latitude" class="form-label">Enter latitude:</label>
+                    <input type="text" class="form-control" id="latitude" name="latitude">
+                </div>
+                <div class="mb-3">
+                    <label for="longitude" class="form-label">Enter longitude:</label>
+                    <input type="text" class="form-control" id="longitude" name="longitude">
+                </div>
+                <button type="submit" class="btn btn-primary">Get Weather</button>
+            </form>
+            <section class="content">
+                <header>
+                    {% block header %}{% endblock %}
+                </header>
+                {% block content %}{% endblock %}
+            </section>
+        </div>
+        <script src="{{ url_for('static', filename='js/today.js') }}"></script>
+    </body>
 </html>
