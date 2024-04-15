@@ -4,7 +4,7 @@ const apiENDPOINT = "api.openweathermap.org"
 const query = document.getElementById("query");
 const resultbox = document.getElementById("results");
 const searchButton = document.getElementById("querySearch");
-
+let iterat = 0;
 /**
  * @description takes parameter limit. This displays "limit" number of locations related to the value in the search box. 
  *              Will eventually link to result page with relevant php info.
@@ -13,8 +13,8 @@ const searchButton = document.getElementById("querySearch");
  */
 function getSearchResults(limit)
 {
-    const search = document.getElementById("query");
-    const val = search.value;
+    //const search = document.getElementById("query");
+    const val = query.value;
     
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${search.value}&limit=${limit}&appid=${apiKEY}`)
     .then(res => res.json())
@@ -32,7 +32,7 @@ function getSearchResults(limit)
  * @param {*} result The json list of relevant search items from the api response.
  */
 function displayResult(result) {
-    var iterat = 0;
+    //var iterat = 0;
     const content = result.flatMap((list)=> {
         
         if(list.country.match(/US/))            //matching US country code
@@ -68,30 +68,75 @@ function setAPICall(lon, lat)
     .then(res => res.json())
     .then(data => {
         console.log(data);
+        updateWeatherDetails(data);
+        loadWeatherRadar(lon, lat);
+        fetchAQIData(lat. lon);
       
     })
     .catch(error => console.error(error));
 }
 
-/**
- * @description Hides the home page elements and displays the result page elements upon pressing the submit button.
- */
-function onSearch() {
-    const homeElem = document.getElementsByClassName("home");
-    const resultElem = document.getElementsByClassName("result-weather");
-    for (const element of homeElem) {
-        element.setAttribute("style", "display: none");
-    }
-    for(const element of resultElem) {
-        element.setAttribute("style", "display:block");
-    }
+function updateWeatherDetails(data) {
+    const locationName = document.getElementById("location-name");
+    const temperature = document.getElementById("temperature");
+    const feelsLike = document.getElementById("feels-like");
+    const wind = document.getElementById("wind");
+    const rainChance = document.getElementById("rain-chance");
+    const humidity = document.getElementById("humidity");
+
+    locationName.innerText = `Location: ${data.name}`;
+    temperature.innerText = `Temperature: ${data.main.temp}°F`;
+    feelsLike.innerText = `Feels Like: ${data.main.feels_like}°F`;
+    wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
+    rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
+    humidity.innerText = `Humidity: ${data.main.humidity}%`;
+
+function loadWeatherRadar(lon,lat) {
+    const layer = "precipitation_new";
+    const iframe = document.getElementById("weatherRadarFrame");
+    iframe.src = `${apiENDPOINT}/weathermap?basemap=map&cities=true&layer=${layer}&lat=${lat}&lon=${lon}&zoom=8&appid=${apiKEY}`;
+
 }
-    
+function fetchAQIData(lat, lon){
+    fetch(`${apiENDPOINT}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
+        .then(res => res.json())
+        .then(aqiData => {
+            const aqi = document.getElementById("AQI");
+            aqi.innerText = `AQI: ${aqiData.list[0].main.aqi}`;
+        })
+        .catch(error => console.error('Error fetching AQI data:', error));AnalyserNode
+    }
+function onSearch() {
+    const homeElements = document.getElementsByClassName("home");
+    const resultElements = document.getElementsByClassName("result-weather");
 
-query.addEventListener('keyup', function () {
-    getSearchResults(5);
-}, 'false');
+    // Hide all elements with class 'home'
+    Array.from(homeElements).forEach(element => {
+        if (element) element.style.display = 'none';
+    });
 
-searchButton.addEventListener('click', function() {
+    // Display all elements with class 'result-weather'
+    Array.from(resultElements).forEach(element => {
+        if (element) element.style.display = 'block';
+    });
+}
+
+function onSearch() {
+    const homeElements = document.getElementsByClassName("home");
+    const resultElements = document.getElementsByClassName("result-weather");
+
+    // Hide all elements with class 'home'
+    Array.from(homeElements).forEach(element => {
+        if (element) element.style.display = 'none';
+    });
+
+    // Display all elements with class 'result-weather'
+    Array.from(resultElements).forEach(element => {
+        if (element) element.style.display = 'block';
+    });
+}
+
+searchButton.addEventListener('click', function () {
     onSearch();
-}, "false");
+}, false);
+}

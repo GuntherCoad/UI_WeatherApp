@@ -1,89 +1,112 @@
 <html>
-<head>
+  <head>
     <title>UIWeatherApp</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
     <div class="home">
-        <header>
-            <h1>Weather App</h1>
-        </header>
-            <br>
-                <div id="bround">
-                    <center>
-                        <h2 style="font-size: 3vw">Static Weather Radar</h2>
-                    </center>
-                </div>
-            <br>
-                <div class="search-content">
-                    <div class="row">
-                        <input class="input" type="text" id="query" name="q" placeholder="Search..." autocomplete="off">
-                        <button id="querySearch" >Search</button>
-                    </div>
-                    <div class="search-results" id="results">
-                        <ul>
-                            <li><button>San Antonio, Texas</button></li>
-                        </ul>
-                    </div>
-                </div>
-        
+      <header>
+        <h1>Weather App</h1>
+      </header>
+      <br />
+      <div id="bround">
+        <center>
+          <h2 style="font-size: 3vw">Static Weather Radar</h2>
+        </center>
+      </div>
+      <br />
+      <div class="search-content">
+        <div class="row">
+          <input
+            class="input"
+            type="text"
+            id="query"
+            name="q"
+            placeholder="Search..."
+            autocomplete="off"
+          />
+          <button id="querySearch">Search</button>
+        </div>
+        <div class="search-results" id="results">
+          <ul>
+            <li><button>San Antonio, Texas</button></li>
+          </ul>
+        </div>
+      </div>
 
-        
-            <div id="row" style="width:50%">
-                <a href="/temp">
-                <div id="column">Witchita, Kansas</div>
-                </a>
-                <div id="column"><img src="/static/images/cloudy.png" style="width: 33.33%" style="height: 50%"></div>
-                <div id="column">Hi, Lo</div>
-            </div>
-            <div id="row" style="width:50%">
-                <a href="/temp">
-                <div id="column">San Antonio, Texas</div>
-                </a>
-                <div id="column"><img src="/static/images/windy.png" style="width: 33.33%" style="height: 50%"></div>
-                <div id="column">Hi, Lo</div>
-            </div>
-            <div id="row" style="width:50%">
-                <a href="/temp">
-                <div id="column">Lansing, Michigan</div>
-                </a>
-                <div id="column"><img src="/static/images/rain.png" style="width: 33.33%" style="height: 50%"></div>
-                <div id="column">Hi, Lo</div>
-            </div>
-            <div class="alert-danger box">
-                <p></p>
-            </div>
+      <div id="row" style="width: 50%">
+        <a href="/temp">
+          <div id="column">Witchita, Kansas</div>
+        </a>
+        <div id="column">
+          <img
+            src="/static/images/cloudy.png"
+            style="width: 33.33%"
+            style="height: 50%"
+          />
+        </div>
+        <div id="column">Hi, Lo</div>
+      </div>
+      <div id="row" style="width: 50%">
+        <a href="/temp">
+          <div id="column">San Antonio, Texas</div>
+        </a>
+        <div id="column">
+          <img
+            src="/static/images/windy.png"
+            style="width: 33.33%"
+            style="height: 50%"
+          />
+        </div>
+        <div id="column">Hi, Lo</div>
+      </div>
+      <div id="row" style="width: 50%">
+        <a href="/temp">
+          <div id="column">Lansing, Michigan</div>
+        </a>
+        <div id="column">
+          <img
+            src="/static/images/rain.png"
+            style="width: 33.33%"
+            style="height: 50%"
+          />
+        </div>
+        <div id="column">Hi, Lo</div>
+      </div>
+      <div class="alert-danger box">
+        <p></p>
+      </div>
     </div>
     <div class="result-weather">
-        <header class="search-header">
-            <div class="search-results-2"></div>
-        </header>
-        <div class="location-weather">
-            <div class="static-info">
-                <div class="left-side">
-                    <div id="location-name"></div>
-                    <div id="temperature"></div>
-                    <div id="feels-like"></div>
-                </div>
-                <div class="right-side">
-                    <div id="AQI"></div>
-                    <div id="pressure"></div>
-                    <div id="wind"></div>
-                    <div id="rain-chance"></div>
-                    <div id="humidity"></div>
-                </div>
-            </div>
-            <div class="dynamic-map"></div>
+      <header class="search-header">
+        <div class="search-results-2"></div>
+      </header>
+      <div class="location-weather">
+        <div class="static-info">
+          <div class="left-side">
+            <div id="location-name"></div>
+            <div id="temperature"></div>
+            <div id="feels-like"></div>
+          </div>
+          <div class="right-side">
+            <div id="AQI"></div>
+            <div id="pressure"></div>
+            <div id="wind"></div>
+            <div id="rain-chance"></div>
+            <div id="humidity"></div>
+          </div>
         </div>
-        <div class="forecast">
-            <div class="forecast-select">
-                
-            </div>
-            <div class="forecast-display"></div>
-        </div>
+        <div class="dynamic-map"></div>
+        <iframe
+          id="weatherRadarFrame"
+          style="width: 100%; height: 400px"
+        ></iframe>
+      </div>
+      <div class="forecast">
+        <div class="forecast-select"></div>
+        <div class="forecast-display"></div>
+      </div>
     </div>
-    
-</body>
-<script src="/static/js/content.js"></script>
+  </body>
+  <script src="/static/js/content.js"></script>
 </html>
