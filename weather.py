@@ -7,7 +7,7 @@ from flask import (
 
 bp = Blueprint('weather', __name__, url_prefix='/weather')
     
-@bp.route('/forecast', methods=('GET', 'POST'))
+@bp.route('/daily', methods=('GET', 'POST'))
 def forecast():
     if request.method == 'POST':
         lati = request.form['latitude']
@@ -20,7 +20,7 @@ def forecast():
     data = get_forecast(lati, long)
 
     if data:
-        return render_template('forecast.html', forecast=data['daily'], 
+        return render_template('daily.html', forecast=data['daily'], 
                            days=data['daily']['time'], zip=zip)
     else:
         return "Failed toretrieve data"
@@ -46,7 +46,7 @@ def current():
     # Add to array
     data['current_weather']['temperature_fahrenheit'] = temp_fah
 
-    return render_template('weather.html', data=data)
+    return render_template('current.html', data=data)
 
 def get_current_weather(latitude, longitude):
     params = {
