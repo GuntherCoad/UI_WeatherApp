@@ -90,7 +90,7 @@ function updateWeatherDetails(data) {
     wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
     rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
     humidity.innerText = `Humidity: ${data.main.humidity}%`;
-
+}
 function loadWeatherRadar(lon,lat) {
     const layer = "precipitation_new";
     const iframe = document.getElementById("weatherRadarFrame");
@@ -139,4 +139,3 @@ function onSearch() {
 searchButton.addEventListener('click', function () {
     onSearch();
 }, false);
-}
