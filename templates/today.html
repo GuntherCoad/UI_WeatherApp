@@ -9,10 +9,37 @@
 <div id="imageContainer">
     <img id="image" src="" alt="Image">
 </div>
-<div id="infoContainer">
-    <p id="today_temp">Temperature: {{ data.current_weather.temperature_fahrenheit }} °F</p>
-    <p>Wind Speed: {{ data.current_weather.windspeed }} m/s</p>
-    <p>Weather Code: {{ data.current_weather.weathercode }}</p>
+<div class="container text-left" id="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-5">Temperature (F):</h1>
+        </div>
+        <div class="col">
+            <h1 class="display-5" id="today-temp">
+                {{ data.current_weather.temperature_fahrenheit }}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1 class="display-5">Wind Speed (m/s):</h1>
+        </div>
+        <div class="col">
+            <h1 class="display-5" id="today-wind">
+                {{ data.current_weather.windspeed }}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1 class="display-5">Weather Code</h1>
+        </div>
+        <div class="col">
+            <h1 class="display-5" id="today-code">
+                {{ data.current_weather.weathercode }}
+            </h1>
+        </div>
+    </div>
 </div>
 {% endif %}
 {% endblock %}
