@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Weather App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.css') }}">
-</head>
-<body>
-    <div class="container-sm">
-        <h1>Weather App</h1>
-    <form method="post">
-        <div class="mb-3">
-        <label for="latitude" class="form-label">Enter latitude:</label>
-        <input type="text" class="form-control" id="latitude" name="latitude">
+    <head>
+        <title><a href="/">Weather App</a></title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.css') }}">
+    </head>
+    <body>
+        <div class="container-sm">
+            <h1>Weather App</h1>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="latitude" class="form-label">Enter latitude:</label>
+                    <input type="text" class="form-control" id="latitude" name="latitude">
+                </div>
+                <div class="mb-3">
+                    <label for="longitude" class="form-label">Enter longitude:</label>
+                    <input type="text" class="form-control" id="longitude" name="longitude">
+                </div>
+                <button type="submit" class="btn btn-primary">Get Weather</button>
+            </form>
+            <section class="content">
+                <header>
+                    {% block header %}{% endblock %}
+                </header>
+                {% block content %}{% endblock %}
+            </section>
         </div>
-        <div class="mb-3">
-        <label for="longitude" class="form-label">Enter longitude:</label>
-        <input type="text" class="form-control" id="longitude" name="longitude">
-        </div>
-        <button type="submit" class="btn btn-primary">Get Weather</button>
-    </form>
-    <section class="content">
-        <header>
-            {% block header %}{% endblock %}
-        </header>
-        {% block content %}{% endblock %}
-    </section>
-    </div>
-</body>
+    </body>
 </html>
