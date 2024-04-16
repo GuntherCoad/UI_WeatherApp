@@ -67,7 +67,7 @@ def current():
     # # Add to array
     # data['current_weather']['temperature_fahrenheit'] = temp_fah
 
-    return render_template('today.html', data=data)
+    return render_template('today.html', today=data)
 
 def get_forecast(latitude, longitude):
     params = {
