@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-{% if data %}
+{% if today %}
 <div class="text-center" id="imageContainer">
     <img id="image" class="img-fluid rounded" src="" alt="Image">
 </div>
@@ -16,7 +16,7 @@
         </div>
         <div class="col">
             <h1 class="display-5" id="today-temp">
-                {{ data.current_weather.temperature_fahrenheit }}
+                {{ today.current.temperature_2m }}
             </h1>
         </div>
     </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="col">
             <h1 class="display-5" id="today-wind">
-                {{ data.current_weather.windspeed }}
+                {{ today.current.wind_speed_10m }}
             </h1>
         </div>
     </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="col">
             <h1 class="display-5" id="today-code">
-                {{ data.current_weather.weathercode }}
+                {{ today.current.weather_code }}
             </h1>
         </div>
     </div>
