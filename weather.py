@@ -41,14 +41,14 @@ def current():
 
     data = get_forecast(lati, long)
     
-    # Extract temperature in Celsius
-    temp_cel = data['current_weather']['temperature']
+    # # Extract temperature in Celsius
+    # temp_cel = data['current_weather']['temperature']
 
-    # Convert Celsius to Fahrenheit
-    temp_fah = temp_cel * 9/5 + 32
+    # # Convert Celsius to Fahrenheit
+    # temp_fah = temp_cel * 9/5 + 32
  
-    # Add to array
-    data['current_weather']['temperature_fahrenheit'] = temp_fah
+    # # Add to array
+    # data['current_weather']['temperature_fahrenheit'] = temp_fah
 
     return render_template('today.html', data=data)
 
