@@ -21,7 +21,7 @@ def home():
 
     if data:
         return render_template('overview.html', 
-                               current=data, 
+                               today=data, 
                                forecast=data['daily'], 
                                days=data['daily']['time'], 
                                zip=zip)
