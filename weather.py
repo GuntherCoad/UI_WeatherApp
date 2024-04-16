@@ -39,7 +39,7 @@ def current():
         lati = float(loc_data[0])
         long = float(loc_data[1])
 
-    data = get_current_weather(lati, long)
+    data = get_forecast(lati, long)
     
     # Extract temperature in Celsius
     temp_cel = data['current_weather']['temperature']
@@ -52,22 +52,12 @@ def current():
 
     return render_template('today.html', data=data)
 
-def get_current_weather(latitude, longitude):
-    params = {
-    	"latitude":  latitude,
-    	"longitude": longitude,
-    	"current_weather": "True",
-        "temperature_unit": "celsius",
-    }
-    response = requests.get(API_WEATHER_URL, params=params)
-    weather_data = response.json()
-    return weather_data
-    
 def get_forecast(latitude, longitude):
     params = {
     	"latitude":  latitude,
     	"longitude": longitude,
         "temperature_unit": "celsius",
+    	"current_weather": "True",
         "daily": ["temperature_2m_max", "temperature_2m_min", "precipitation_sum", "windspeed_10m_max"],
     }
     response = requests.get(API_WEATHER_URL, params=params)
