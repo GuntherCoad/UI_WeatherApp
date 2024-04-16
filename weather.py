@@ -6,7 +6,8 @@ from flask import (
 )
 
 bp = Blueprint('weather', __name__, url_prefix='/weather')
-    
+# TODO: Dynanic loading of card images based on weather_code.    
+# {{ # url_for('static', filename='images/weather/' + weather_code + '.svg') }} 
 @bp.route('/', methods=('GET', 'POST'))
 def home():
     if request.method == 'POST':
@@ -67,7 +68,7 @@ def current():
     # # Add to array
     # data['current_weather']['temperature_fahrenheit'] = temp_fah
 
-    return render_template('today.html', data=data)
+    return render_template('today.html', today=data)
 
 def get_forecast(latitude, longitude):
     params = {

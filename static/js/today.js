@@ -1,27 +1,28 @@
-console.log("hello");
-
 document.addEventListener('DOMContentLoaded', function() {
     // var tempEl = document.getElementById('today-temp');
     var codeEl= document.getElementById('today-code');
+    var isDayEl= document.getElementById('isDay');
 
     // var temp = parseFloat(tempEl.textContent.trim());
     var wcode = parseInt(codeEl.textContent.trim());
+    var is_day= parseInt(isDayEl.textContent.trim());
 
     // console.log(temp);
     console.log(wcode);
+    console.log(is_day);
 
     var imgEl= document.getElementById('image');
-    if (wcode == 0) {
-        imgEl.src = '/static/images/cloudy.png';
-    } else {
-        imgEl.src = '/static/images/rain.png';
-    }
 
     switch (wcode) {
         case 1:
         case 2:
         case 3:
-            imgEl.src = '/static/images/fill/darksky/clear-day.svg';
+            if (is_day == 0) {
+                imgEl.src = '/static/images/fill/darksky/clear-night.svg';
+            }
+            else {
+                imgEl.src = '/static/images/fill/darksky/clear-day.svg';
+            }
             break;
         case 45:
         case 48:

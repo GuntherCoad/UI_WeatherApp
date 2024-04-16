@@ -5,41 +5,34 @@
 {% endblock %}
 
 {% block content %}
-{% if data %}
-<div class="text-center" id="imageContainer">
-    <img id="image" class="img-fluid rounded" src="" alt="Image">
+{% if today %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <img src="" class="img-fluid card-img-top" style="width: 50%;" id="image" alt="weather-code">
+                <div class="card-body">
+                    <h5 class="card-title">City</h5>
+                    <p id="isDay" class="card-text">{{ today.current.is_day }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Temperature (F): {{ today.current.temperature_2m }}
+                    </li>
+                    <li class="list-group-item">
+                        Humidity (%): {{ today.current.relative_humidity_2m }}
+                    </li>
+                    <li class="list-group-item">
+                        Wind Speed (mph): {{ today.current.wind_speed_10m }}
+                    </li>
+                    <li id="today-code" class="list-group-item">
+                        {{ today.current.weather_code }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
-<div class="container text-left" id="container">
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5">Temperature (F):</h1>
-        </div>
-        <div class="col">
-            <h1 class="display-5" id="today-temp">
-                {{ data.current_weather.temperature_fahrenheit }}
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5">Wind Speed (mph):</h1>
-        </div>
-        <div class="col">
-            <h1 class="display-5" id="today-wind">
-                {{ data.current_weather.windspeed }}
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5">Weather Code</h1>
-        </div>
-        <div class="col">
-            <h1 class="display-5" id="today-code">
-                {{ data.current_weather.weathercode }}
-            </h1>
-        </div>
-    </div>
-</div>
-{% endif %}
+<script src="{{ url_for('static', filename='js/today.js') }}"></script>
 {% endblock %}

@@ -16,11 +16,11 @@ function getSearchResults(limit)
     //const search = document.getElementById("query");
     const val = query.value;
     
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${search.value}&limit=${limit}&appid=${apiKEY}`)
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${val}&limit=${limit}&appid=${apiKEY}`)
     .then(res => res.json())
     .then(data => {
         displayResult(data);
-        //console.log(data);
+        //console.log(item);
       
     })
     .catch(error => console.error(error));
@@ -33,20 +33,24 @@ function getSearchResults(limit)
  */
 function displayResult(result) {
     //var iterat = 0;
-    const content = result.flatMap((list)=> {
-        
-        if(list.country.match(/US/))            //matching US country code
+
+    var content = [];
+
+    for(element in result)
+    {
+        if(result[element].country.toLowerCase() == "us")            //matching US country code
         {
             iterat++;
-            const resultHTML =  "<li id=\"" + `item${iterat}` + "\" onclick= \"setAPICall(" + `${list.lon}, ${list.lat}` + 
-                                ")\"><button>" + list.name + ", " + list.state + " </button></li>";
-            return resultHTML;
+            const resultHTML =  "<li id=\"" + `item${iterat}` + "\" onclick= \"setAPICall(" + 
+                                `${result[element].lon}, ${result[element].lat}` + 
+                                ")\"><button>" + result[element].name + ", " + result[element].state + " </button></li>";
+            content.push(resultHTML);
         }
         else
         {
-            return [];
+            continue;
         }
-    });
+    }
 
     //idea: could grab result boxes by class in order to generalize the function
     //will make the results show in two result boxes, one is hidden at a given time though
@@ -68,6 +72,7 @@ function setAPICall(lon, lat)
     .then(res => res.json())
     .then(data => {
         console.log(data);
+        onSearch();
         updateWeatherDetails(data);
         loadWeatherRadar(lon, lat);
         fetchAQIData(lat. lon);
@@ -91,14 +96,13 @@ function updateWeatherDetails(data) {
     wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
     rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
     humidity.innerText = `Humidity: ${data.main.humidity}%`;
-    pressure.innerText = `Pressure: ${data.main.pressure} hPa`;
 
 function loadWeatherRadar(lon,lat) {
     const layer = "precipitation_new";
     const iframe = document.getElementById("weatherRadarFrame");
     iframe.src = `${apiENDPOINT}/weathermap?basemap=map&cities=true&layer=${layer}&lat=${lat}&lon=${lon}&zoom=8&appid=${apiKEY}`;
 
-}}
+}
 function fetchAQIData(lat, lon){
     fetch(`${apiENDPOINT}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
         .then(res => res.json())
@@ -125,7 +129,25 @@ function onSearch() {
     });
 }
 
+/**
+ * @description Will do API call and displays hourly weather data for the location.
+ */
+function loadHourlyWeather() {
+
+}
+
+/**
+ * @description Will do API call and displays weekly weather data for the location.
+ */
+function loadWeeklyWeather() {
+
+}
+
 searchButton.addEventListener('click', function() {
 
     onSearch();
 }, false);
+
+query.addEventListener('keyup', function() {
+    getSearchResults(5);
+})
