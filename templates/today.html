@@ -6,40 +6,32 @@
 
 {% block content %}
 {% if today %}
-<div class="text-center" id="imageContainer">
-    <img id="image" class="img-fluid rounded" src="" alt="Image">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <img src="" class="card-img=top" id="image" alt="weather-code">
+                <div class="card-body">
+                    <h5 class="card-title">City</h5>
+                    <p class="card-text">Some quick example text.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Temperature (F): {{ today.current.temperature_2m }}
+                    </li>
+                    <li class="list-group-item">
+                        Humidity (%): {{ today.current.relative_humidity_2m }}
+                    </li>
+                    <li class="list-group-item">
+                        Wind Speed (mph): {{ today.current.wind_speed_10m }}
+                    </li>
+                    <li id="wcode" class="list-group-item">
+                        {{ today.current.weather_code }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
-<div class="container text-left" id="container">
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5">Temperature (F):</h1>
-        </div>
-        <div class="col">
-            <h1 class="display-5" id="today-temp">
-                {{ today.current.temperature_2m }}
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5">Wind Speed (mph):</h1>
-        </div>
-        <div class="col">
-            <h1 class="display-5" id="today-wind">
-                {{ today.current.wind_speed_10m }}
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5">Weather Code</h1>
-        </div>
-        <div class="col">
-            <h1 class="display-5" id="today-code">
-                {{ today.current.weather_code }}
-            </h1>
-        </div>
-    </div>
-</div>
-{% endif %}
 {% endblock %}
