@@ -1,0 +1,62 @@
+{% extends 'weather.html' %}
+
+{% block header %}
+<h1>{% block title %}Overview{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 18rem;">
+    <img src="" class="card-img=top" alt="weather-code">
+    <div class="card-body">
+        <h5 class="card-title">City</h5>
+        <p class="card-text">Some quick example text.</p>
+    </div>
+    <ul class="list-grou list-group-flush">
+        <li class="list-group-item">High</li>
+        <li class="list-group-item">Low</li>
+    </ul>
+    <div class="card-body">
+        <a href="#" class="card-link">More info</a>
+    </div>
+    </div>
+</div>
+
+
+{% if data %}
+<div class="text-center" id="imageContainer">
+    <img id="image" class="img-fluid rounded" src="" alt="Image">
+</div>
+<div class="container text-left" id="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-5">Temperature (F):</h1>
+        </div>
+        <div class="col">
+            <h1 class="display-5" id="today-temp">
+                {{ data.current_weather.temperature_fahrenheit }}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1 class="display-5">Wind Speed (mph):</h1>
+        </div>
+        <div class="col">
+            <h1 class="display-5" id="today-wind">
+                {{ data.current_weather.windspeed }}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1 class="display-5">Weather Code</h1>
+        </div>
+        <div class="col">
+            <h1 class="display-5" id="today-code">
+                {{ data.current_weather.weathercode }}
+            </h1>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
