@@ -9,7 +9,24 @@ bp = Blueprint('weather', __name__, url_prefix='/weather')
     
 @bp.route('/', methods=('GET', 'POST'))
 def home():
-    return render_template('weather.html')
+    if request.method == 'POST':
+        lati = request.form['latitude']
+        long = request.form['longitude']
+    else:
+        loc_data = get_current_location()
+        lati = float(loc_data[0])
+        long = float(loc_data[1])
+    
+    data = get_forecast(lati, long)
+
+    if data:
+        return render_template('overview.html', 
+                               current=data, 
+                               forecast=data['daily'], 
+                               days=data['daily']['time'], 
+                               zip=zip)
+    else:
+        return "Failed toretrieve data"
 
 @bp.route('/daily', methods=('GET', 'POST'))
 def forecast():
