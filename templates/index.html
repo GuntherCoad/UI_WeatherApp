@@ -2,6 +2,7 @@
   <head>
     <title>UIWeatherApp</title>
     <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/bootstrap.css" />
   </head>
   <body>
     <div class="home">
@@ -18,14 +19,14 @@
       <div class="search-content">
         <div class="row">
           <input
-            class="input"
+            class="input col-1"
             type="text"
             id="query"
             name="q"
             placeholder="Search..."
             autocomplete="off"
           />
-          <button id="querySearch">Search</button>
+          <button id="querySearch" class="col-1">Search</button>
         </div>
         <div class="search-results" id="results">
           <ul>
@@ -105,7 +106,12 @@
       </div>
       <div class="forecast">
         <div class="forecast-select"></div>
-        <div class="forecast-display"></div>
+        <div class="forecast-display row" id="forecastDisplay">
+          <div class="card col-1">
+            <div class="card-body"><img src="/static/images/fill/all/clear-day.svg" alt="clear day"></div>
+            <div class="card-body">placeholder text</div>
+          </div>
+        </div>
       </div>
     </div>
   </body>

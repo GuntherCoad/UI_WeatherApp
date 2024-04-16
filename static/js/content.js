@@ -75,6 +75,7 @@ function setAPICall(lon, lat)
         updateWeatherDetails(data);
         loadWeatherRadar(lon, lat);
         fetchAQIData(lat, lon);
+        loadHourlyWeather(lat, lon)
       
     })
     .catch(error => console.error(error));
@@ -95,6 +96,7 @@ function updateWeatherDetails(data) {
     wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
     rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
     humidity.innerText = `Humidity: ${data.main.humidity}%`;
+}
 
 function loadWeatherRadar(lon,lat) {
     const layer = "precipitation_new";
@@ -112,7 +114,6 @@ function fetchAQIData(lat, lon){
     fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
         .then(res => res.json())
         .then(aqiData => {
-            console.log(aqiData);
             const aqi = document.getElementById("AQI");
             aqi.innerText = `AQI: ${aqiData.list[0].main.aqi}, ${AQIRelativeTerm(aqiData.list[0].main.aqi)}`;
         })
@@ -158,17 +159,46 @@ function onSearch() {
 }
 
 /**
- * @description Will do API call and displays hourly weather data for the location.
+ * @description Will do API call and displays hourly weather data for the location. Currently only 5 hours forecast.
  */
-function loadHourlyWeather() {
+function loadHourlyWeather(lat, lon) {
+    fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKEY}&cnt=5`)
+    .then(res => res.json())
+    .then(data => {
+        var content = [];
+        var forecastArr = [];
+        const forDisplay = document.getElementById("forecastDisplay");
+        content = data.list;
+        for(element in content)
+        {
+            const currElem = content[element];
+            console.log(content[element]);
+            const foreCastCard =`   <div class="card col-1">
+                                    <div class="card-body"><img src="/static/images/fill/all/clear-day.svg" alt="clear day"></div>
+                                    <div class="card-body">${currElem.weather[0].description}</div></div>`;
+            forecastArr.push(foreCastCard);
+        }
+        forDisplay.innerHTML = forecastArr.join("");
+      
+    })
+    .catch(error => console.error(error));
+}
+
+function getWeatherIcon (weatherID) {
 
 }
 
 /**
  * @description Will do API call and displays weekly weather data for the location.
  */
-function loadWeeklyWeather() {
-
+function loadWeeklyWeather(lat, lon) {
+    fetch(`https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${apiKEY}`)
+    .then(res => res.json())
+    .then(data => {
+        
+      
+    })
+    .catch(error => console.error(error));
 }
 
 searchButton.addEventListener('click', function() {
