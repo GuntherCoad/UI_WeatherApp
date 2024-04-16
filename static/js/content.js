@@ -91,6 +91,7 @@ function updateWeatherDetails(data) {
     wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
     rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
     humidity.innerText = `Humidity: ${data.main.humidity}%`;
+    pressure.innerText = `Pressure: ${data.main.pressure} hPa`;
 
 function loadWeatherRadar(lon,lat) {
     const layer = "precipitation_new";
