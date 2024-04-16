@@ -11,6 +11,7 @@ let iterat = 0;
  * 
  * @param {*} limit the number of related searches that populate upon typing
  */
+
 function getSearchResults(limit)
 {
     //const search = document.getElementById("query");
@@ -30,6 +31,7 @@ function getSearchResults(limit)
  * 
  * @param {*} result The json list of relevant search items from the api response.
  */
+
 function displayResult(result) {
     //var iterat = 0;
 
@@ -119,29 +121,6 @@ function fetchAQIData(lat, lon){
         })
         .catch(error => console.error('Error fetching AQI data:', error));AnalyserNode
 }
-
-/**
- * @description takes the AQI number as an input and outputs a qualitative name for that level of air quality
- * @link https://openweathermap.org/api/air-pollution
- */
-function AQIRelativeTerm (AQIlevel){
-    switch(AQIlevel)
-    {
-        case 1:
-            return "Good";
-        case 2:
-            return "Fair";
-        case 3:
-            return "Moderate";
-        case 4:
-            return "Poor";
-        case 5:
-            return "Very Poor";
-        default:
-            return "";
-    }
-}
-
 
 function onSearch() {
     const homeElements = document.getElementsByClassName("home");
