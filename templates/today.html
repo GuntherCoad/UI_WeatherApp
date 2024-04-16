@@ -8,12 +8,12 @@
 {% if today %}
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-sm">
             <div class="card">
-                <img src="" class="card-img=top" id="image" alt="weather-code">
+                <img src="" class="img-fluid card-img-top" style="width: 50%;" id="image" alt="weather-code">
                 <div class="card-body">
                     <h5 class="card-title">City</h5>
-                    <p class="card-text">Some quick example text.</p>
+                    <p class="card-text">{{ today.current.is_day }}</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
@@ -25,7 +25,7 @@
                     <li class="list-group-item">
                         Wind Speed (mph): {{ today.current.wind_speed_10m }}
                     </li>
-                    <li id="wcode" class="list-group-item">
+                    <li id="today-code" class="list-group-item">
                         {{ today.current.weather_code }}
                     </li>
                 </ul>
