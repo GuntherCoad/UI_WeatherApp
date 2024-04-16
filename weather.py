@@ -92,7 +92,9 @@ def get_forecast(latitude, longitude):
     }
     response = requests.get(API_WEATHER_URL, params=params)
     weather_data = response.json()
-    weather_data = convert_date(weather_data)
+    convert_date(weather_data)
+    add_day_of_week(weather_data)
+    print(weather_data)
     return weather_data
 
 def convert_date(data):
@@ -101,7 +103,12 @@ def convert_date(data):
         new_date = dt.strptime(og_date, "%Y-%m-%d").strftime("%m/%d/%Y")
         data['daily']['time'][i] = new_date
 
-    return data
+def add_day_of_week(data):
+    data['daily']['day_of_week'] = []
+    for date_str in data['daily']['time']:
+        date = dt.strptime(date_str, '%m/%d/%Y')
+        day_of_week = date.strftime('%A')
+        data['daily']['day_of_week'].append(day_of_week)
 
 def get_lat_long(city):
     place, (lat, long) = gn.geocode(city)
