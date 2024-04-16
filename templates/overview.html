@@ -5,24 +5,31 @@
 {% endblock %}
 
 {% block content %}
+<h2>Today's Forecast</h2>
+{% if today %}
 <div class="card" style="width: 18rem;">
-    <img src="" class="card-img=top" alt="weather-code">
+    <img src="" class="card-img=top" id="image" alt="weather-code">
     <div class="card-body">
         <h5 class="card-title">City</h5>
         <p class="card-text">Some quick example text.</p>
     </div>
-    <ul class="list-grou list-group-flush">
-        <li class="list-group-item">High</li>
-        <li class="list-group-item">Low</li>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Temperature (F): {{ today.current.temperature_2m }}
+        </li>
+        <li class="list-group-item">
+            Humidity (%): {{ today.current.relative_humidity_2m }}
+        </li>
+        <li class="list-group-item">
+            Wind Speed (mph): {{ today.current.wind_speed_10m }}
+        </li>
     </ul>
     <div class="card-body">
-        <a href="#" class="card-link">More info</a>
+        <a href="/weather/today" class="card-link">More info</a>
     </div>
     </div>
 </div>
 
-
-{% if data %}
 <div class="text-center" id="imageContainer">
     <img id="image" class="img-fluid rounded" src="" alt="Image">
 </div>
@@ -33,7 +40,7 @@
         </div>
         <div class="col">
             <h1 class="display-5" id="today-temp">
-                {{ data.current_weather.temperature_fahrenheit }}
+                {{ today.current.temperature }}
             </h1>
         </div>
     </div>
@@ -43,7 +50,7 @@
         </div>
         <div class="col">
             <h1 class="display-5" id="today-wind">
-                {{ data.current_weather.windspeed }}
+                {{ today.current.windspeed }}
             </h1>
         </div>
     </div>
@@ -53,7 +60,7 @@
         </div>
         <div class="col">
             <h1 class="display-5" id="today-code">
-                {{ data.current_weather.weathercode }}
+                {{ today.current.weathercode }}
             </h1>
         </div>
     </div>
