@@ -11,6 +11,7 @@ let iterat = 0;
  * 
  * @param {*} limit the number of related searches that populate upon typing
  */
+
 function getSearchResults(limit)
 {
     //const search = document.getElementById("query");
@@ -20,6 +21,7 @@ function getSearchResults(limit)
     .then(res => res.json())
     .then(data => {
         displayResult(data);
+        //console.log(item);
       
     })
     .catch(error => console.error(error));
@@ -30,6 +32,7 @@ function getSearchResults(limit)
  * 
  * @param {*} result The json list of relevant search items from the api response.
  */
+
 function displayResult(result) {
     //var iterat = 0;
 
@@ -272,8 +275,8 @@ function setWeatherIcon (weatherID) {
 searchButton.addEventListener('click', function() {
     getSearchResults(5);
     onSearch();
-}, false);
+}, "false");
 
 query.addEventListener('keyup', function() {
     getSearchResults(5);
-}, false);
+}, "false");
