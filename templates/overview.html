@@ -8,7 +8,7 @@
 <h2>Today's Forecast</h2>
 {% if today %}
 <div class="card" style="width: 18rem;">
-    <img src="" class="card-img=top" id="image" alt="weather-code">
+    <img src="{{ url_for('static', filename='images/fill/darksky/clear-day.svg') }}" class="card-img=top" id="image" alt="weather-code">
     <div class="card-body">
         <h5 class="card-title">City</h5>
         <p class="card-text">Some quick example text.</p>
@@ -39,9 +39,9 @@
         {% if loop.index0 > 0 %}
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4 mx-2">
             <div class="card" style="width: 18rem;">
-                <img src="" class="card-img=top" id="image" alt="weather-code">
+                <img src="{{ url_for('static', filename='images/fill/darksky/clear-day.svg') }}" class="card-img=top" id="image" alt="weather-code">
                 <div class="card-body">
-                    <h5 class="card-title">City</h5>
+                    <h5 class="card-title">Day of the Week</h5>
                     <p class="card-text">{{ day }}</p>
                 </div>
                 <ul class="list-group list-group-flush">
