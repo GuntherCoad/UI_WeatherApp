@@ -7,17 +7,6 @@
     <body>
         <div class="container-sm">
             <h1><a href="/weather">Weather App</a></h1>
-            <form method="post">
-                <div class="mb-3">
-                    <label for="latitude" class="form-label">Enter latitude:</label>
-                    <input type="text" class="form-control" id="latitude" name="latitude">
-                </div>
-                <div class="mb-3">
-                    <label for="longitude" class="form-label">Enter longitude:</label>
-                    <input type="text" class="form-control" id="longitude" name="longitude">
-                </div>
-                <button type="submit" class="btn btn-primary">Get Weather</button>
-            </form>
             <section class="content">
                 <header>
                     {% block header %}{% endblock %}
