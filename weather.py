@@ -56,7 +56,7 @@ def get_forecast(latitude, longitude):
     params = {
     	"latitude":  latitude,
     	"longitude": longitude,
-        "temperature_unit": "celsius",
+        "temperature_unit": "fahrenheit",
     	"current_weather": "True",
         "daily": ["temperature_2m_max", "temperature_2m_min", "precipitation_sum", "windspeed_10m_max"],
     }
