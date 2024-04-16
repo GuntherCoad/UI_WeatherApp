@@ -75,7 +75,7 @@ function setAPICall(lon, lat)
         updateWeatherDetails(data);
         loadWeatherRadar(lon, lat);
         fetchAQIData(lat, lon);
-        loadHourlyWeather(lat, lon)
+        //loadHourlyWeather(lat, lon)
       
     })
     .catch(error => console.error(error));
@@ -172,9 +172,11 @@ function loadHourlyWeather(lat, lon) {
         for(element in content)
         {
             const currElem = content[element];
+            const elemUnix = timeConverter(currElem.dt);
             console.log(content[element]);
             const foreCastCard =`   <div class="card col-1">
-                                    <div class="card-body"><img src="/static/images/fill/all/clear-day.svg" alt="clear day"></div>
+                                    <div class="card-body">${setWeatherIcon(currElem.weather[0].id)}</div>
+                                    <div class="card-body">${elemUnix}</div>
                                     <div class="card-body">${currElem.weather[0].description}</div></div>`;
             forecastArr.push(foreCastCard);
         }
@@ -184,10 +186,6 @@ function loadHourlyWeather(lat, lon) {
     .catch(error => console.error(error));
 }
 
-function getWeatherIcon (weatherID) {
-
-}
-
 /**
  * @description Will do API call and displays weekly weather data for the location.
  */
@@ -195,10 +193,80 @@ function loadWeeklyWeather(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${apiKEY}`)
     .then(res => res.json())
     .then(data => {
-        
+        var content = [];
+        var forecastArr = [];
+        const forDisplay = document.getElementById("forecastDisplay");
+        content = data.list;
+        for(element in content)
+        {
+            const currElem = content[element];
+            const elemUnix = timeConverter(currElem.dt);
+            console.log(content[element]);
+            const foreCastCard =`   <div class="card col-1">
+                                    <div class="card-body">${setWeatherIcon(currElem.weather[0].id)}</div>
+                                    <div class="card-body">${elemUnix}</div>
+                                    <div class="card-body">${currElem.weather[0].description}</div></div>`;
+            forecastArr.push(foreCastCard);
+        }
+        forDisplay.innerHTML = forecastArr.join("");  
       
     })
     .catch(error => console.error(error));
+}
+
+function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var time = a.toLocaleTimeString('en-US', {timeStyle: "short"});
+    return time;
+  }
+
+function setWeatherIcon (weatherID) {
+    const code = Math.trunc(weatherID / 100);
+    switch(code)
+    {
+        case 2:
+            return `<img src="/static/images/fill/all/thunderstorms-rain.svg">`;
+        case 3:
+            return `<img src="/static/images/fill/all/drizzle.svg">`;
+        case 5:
+            return `<img src="/static/images/fill/all/rain.svg">`;
+        case 6:
+            return `<img src="/static/images/fill/all/snow.svg">`;
+        case 7:
+            switch(weatherID)
+            {
+                case 701:
+                    return `<img src="/static/images/fill/all/mist.svg">`;
+                case 711:
+                    return `<img src="/static/images/fill/all/smoke.svg">`;
+                case 721:
+                    return `<img src="/static/images/fill/all/haze.svg">`;
+                case 731:
+                    return `<img src="/static/images/fill/all/dust.svg">`;
+                case 741:
+                    return `<img src="/static/images/fill/all/fog.svg">`;
+                case 781:
+                    return `<img src="/static/images/fill/all/tornado.svg">`;
+                default:
+                    return `<img src="/static/images/fill/all/mist.svg">`;
+            }
+        case 8:
+            switch(weatherID)
+            {
+                case 800:
+                    return `<img src="/static/images/fill/all/clear-day.svg">`;
+                case 801:
+                case 802:
+                    return `<img src="/static/images/fill/all/partly-cloudy-day.svg">`;
+                case 803:
+                case 804:
+                    return `<img src="/static/images/fill/all/cloudy.svg">`;
+
+            }
+            
+        default:
+            return "no image available";
+    }
 }
 
 searchButton.addEventListener('click', function() {
