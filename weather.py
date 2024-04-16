@@ -3,6 +3,7 @@ import sys
 from geopy import geocoders
 from config import API_WEATHER_URL, GEO_CODE
 from location import get_current_location
+from datetime import datetime as dt
 from flask import (
     Blueprint, render_template, request, 
 )
@@ -91,7 +92,16 @@ def get_forecast(latitude, longitude):
     }
     response = requests.get(API_WEATHER_URL, params=params)
     weather_data = response.json()
+    weather_data = convert_date(weather_data)
     return weather_data
+
+def convert_date(data):
+    for i in range(len(data['daily']['time'])):
+        og_date = data['daily']['time'][i]
+        new_date = dt.strptime(og_date, "%Y-%m-%d").strftime("%m/%d/%Y")
+        data['daily']['time'][i] = new_date
+
+    return data
 
 def get_lat_long(city):
     place, (lat, long) = gn.geocode(city)
