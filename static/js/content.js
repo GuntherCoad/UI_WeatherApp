@@ -20,7 +20,6 @@ function getSearchResults(limit)
     .then(res => res.json())
     .then(data => {
         displayResult(data);
-        //console.log(item);
       
     })
     .catch(error => console.error(error));
@@ -71,11 +70,11 @@ function setAPICall(lon, lat)
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKEY}&units=imperial`)
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        //console.log(data);
         onSearch();
         updateWeatherDetails(data);
         loadWeatherRadar(lon, lat);
-        fetchAQIData(lat. lon);
+        fetchAQIData(lat, lon);
       
     })
     .catch(error => console.error(error));
@@ -96,22 +95,57 @@ function updateWeatherDetails(data) {
     wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
     rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
     humidity.innerText = `Humidity: ${data.main.humidity}%`;
-
+}
+/**
+ * @description loads the weather radar; currently not functioning.
+ * 
+ * @param {*} lon longitude of the location.
+ * @param {*} lat latitude of the location.
+ */
 function loadWeatherRadar(lon,lat) {
     const layer = "precipitation_new";
     const iframe = document.getElementById("weatherRadarFrame");
     iframe.src = `${apiENDPOINT}/weathermap?basemap=map&cities=true&layer=${layer}&lat=${lat}&lon=${lon}&zoom=8&appid=${apiKEY}`;
 
 }
+/**
+ * @description using the longitude and latitude given by setAPICall(), this fetches the air quality index.
+ * 
+ * @param {*} lat latitude of the location.
+ * @param {*} lon longitude of the location.
+ */
 function fetchAQIData(lat, lon){
-    fetch(`${apiENDPOINT}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
+    fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
         .then(res => res.json())
         .then(aqiData => {
+            console.log(aqiData);
             const aqi = document.getElementById("AQI");
-            aqi.innerText = `AQI: ${aqiData.list[0].main.aqi}`;
+            aqi.innerText = `AQI: ${aqiData.list[0].main.aqi}, ${AQIRelativeTerm(aqiData.list[0].main.aqi)}`;
         })
         .catch(error => console.error('Error fetching AQI data:', error));AnalyserNode
+}
+
+/**
+ * @description takes the AQI number as an input and outputs a qualitative name for that level of air quality
+ * @link https://openweathermap.org/api/air-pollution
+ */
+function AQIRelativeTerm (AQIlevel){
+    switch(AQIlevel)
+    {
+        case 1:
+            return "Good";
+        case 2:
+            return "Fair";
+        case 3:
+            return "Moderate";
+        case 4:
+            return "Poor";
+        case 5:
+            return "Very Poor";
+        default:
+            return "";
     }
+}
 
 
 function onSearch() {
