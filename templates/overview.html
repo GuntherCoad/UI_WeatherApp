@@ -27,42 +27,34 @@
     <div class="card-body">
         <a href="/weather/today" class="card-link">More info</a>
     </div>
-    </div>
+</div>
 </div>
 
-<div class="text-center" id="imageContainer">
-    <img id="image" class="img-fluid rounded" src="" alt="Image">
-</div>
-<div class="container text-left" id="container">
+<div class="container">
+<h2>Daily Forecast</h2>
     <div class="row">
-        <div class="col">
-            <h1 class="display-5">Temperature (F):</h1>
+        {% for day, max_temp, min_temp, precip, max_wind in zip(days, 
+        forecast.temperature_2m_max, forecast.temperature_2m_min, 
+        forecast.precipitation_sum, forecast.windspeed_10m_max) %}
+        {% if loop.index0 > 0 %}
+        <div class="col-sm-6 col-md-4 col-lg-3 mb-4 mx-2">
+            <div class="card" style="width: 18rem;">
+                <img src="" class="card-img=top" id="image" alt="weather-code">
+                <div class="card-body">
+                    <h5 class="card-title">City</h5>
+                    <p class="card-text">{{ day }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">High (F): {{ max_temp }}</li>
+                    <li class="list-group-item">Low (F): {{ min_temp }}</li>
+                </ul>
+                <div class="card-body">
+                    <a href="/weather/today" class="card-link">More info</a>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <h1 class="display-5" id="today-temp">
-                {{ today.current.temperature }}
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5">Wind Speed (mph):</h1>
-        </div>
-        <div class="col">
-            <h1 class="display-5" id="today-wind">
-                {{ today.current.windspeed }}
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5">Weather Code</h1>
-        </div>
-        <div class="col">
-            <h1 class="display-5" id="today-code">
-                {{ today.current.weathercode }}
-            </h1>
-        </div>
+        {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endif %}
