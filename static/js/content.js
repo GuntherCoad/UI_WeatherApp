@@ -96,7 +96,8 @@ function updateWeatherDetails(data) {
     wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
     rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
     humidity.innerText = `Humidity: ${data.main.humidity}%`;
-
+    pressure.innerText = `Pressure: ${data.main.pressure} hPa`;
+}
 function loadWeatherRadar(lon,lat) {
     const layer = "precipitation_new";
     const iframe = document.getElementById("weatherRadarFrame");
@@ -144,10 +145,10 @@ function loadWeeklyWeather() {
 }
 
 searchButton.addEventListener('click', function() {
-
+    getSearchResults(5);
     onSearch();
 }, false);
 
 query.addEventListener('keyup', function() {
     getSearchResults(5);
-})
+}, false);
