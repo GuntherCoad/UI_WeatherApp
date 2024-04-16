@@ -11,6 +11,7 @@ let iterat = 0;
  * 
  * @param {*} limit the number of related searches that populate upon typing
  */
+
 function getSearchResults(limit)
 {
     //const search = document.getElementById("query");
@@ -31,6 +32,7 @@ function getSearchResults(limit)
  * 
  * @param {*} result The json list of relevant search items from the api response.
  */
+
 function displayResult(result) {
     //var iterat = 0;
 
@@ -102,6 +104,7 @@ function loadWeatherRadar(lon,lat) {
     iframe.src = `${apiENDPOINT}/weathermap?basemap=map&cities=true&layer=${layer}&lat=${lat}&lon=${lon}&zoom=8&appid=${apiKEY}`;
 
 }}
+
 function fetchAQIData(lat, lon){
     fetch(`${apiENDPOINT}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
         .then(res => res.json())
@@ -110,8 +113,7 @@ function fetchAQIData(lat, lon){
             aqi.innerText = `AQI: ${aqiData.list[0].main.aqi}`;
         })
         .catch(error => console.error('Error fetching AQI data:', error));AnalyserNode
-    }
-
+}
 
 function onSearch() {
     const homeElements = document.getElementsByClassName("home");
