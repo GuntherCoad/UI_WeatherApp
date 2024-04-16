@@ -41,7 +41,8 @@ function displayResult(result) {
         if(result[element].country.toLowerCase() == "us")            //matching US country code
         {
             iterat++;
-            const resultHTML =  "<li id=\"" + `item${iterat}` + "\" onclick= \"setAPICall(" + `${result[element].lon}, ${result[element].lat}` + 
+            const resultHTML =  "<li id=\"" + `item${iterat}` + "\" onclick= \"setAPICall(" + 
+                                `${result[element].lon}, ${result[element].lat}` + 
                                 ")\"><button>" + result[element].name + ", " + result[element].state + " </button></li>";
             content.push(resultHTML);
         }
@@ -95,13 +96,13 @@ function updateWeatherDetails(data) {
     wind.innerText = `Wind Speed: ${data.wind.speed} mph`;
     rainChance.innerText = `Rain Chance: ${data.rain ? data.rain['1h'] + '%' : 'No rain forecasted'}`;
     humidity.innerText = `Humidity: ${data.main.humidity}%`;
-
+}
 function loadWeatherRadar(lon,lat) {
     const layer = "precipitation_new";
     const iframe = document.getElementById("weatherRadarFrame");
     iframe.src = `${apiENDPOINT}/weathermap?basemap=map&cities=true&layer=${layer}&lat=${lat}&lon=${lon}&zoom=8&appid=${apiKEY}`;
 
-}}
+}
 function fetchAQIData(lat, lon){
     fetch(`${apiENDPOINT}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
         .then(res => res.json())
@@ -126,6 +127,20 @@ function onSearch() {
     Array.from(resultElements).forEach(element => {
         if (element) element.style.display = 'block';
     });
+}
+
+/**
+ * @description Will do API call and displays hourly weather data for the location.
+ */
+function loadHourlyWeather() {
+
+}
+
+/**
+ * @description Will do API call and displays weekly weather data for the location.
+ */
+function loadWeeklyWeather() {
+
 }
 
 searchButton.addEventListener('click', function() {
