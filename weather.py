@@ -33,10 +33,12 @@ def home():
   
     data = get_forecast(lati, long)
     image_paths = weather_code_to_file(data)
+    today_img = weather_code_to_file2(data)
     print(city, file=sys.stderr)
     if data:
         return render_template('overview.html', 
                                today=data, 
+                               today_path=today_img, 
                                forecast=data['daily'], 
                                days=data['daily']['time'],
                                city=city, 
@@ -46,6 +48,51 @@ def home():
                                zip=zip)
     else:
         return "Failed toretrieve data"
+
+def weather_code_to_file2(data):
+       # 0,          # Clear sky
+       # 1, 2, 3,    # Mainly clear, partly cloudy, and overcast
+       # 45, 48,     # Fog and depositing rime fog
+       # 51, 53, 55, # Drizzle: Light, moderate, and dense intensity
+       # 56, 57,     # Freezing Drizzle: Light and dense intensity
+       # 61, 63, 65, # Rain: Slight, moderate and heavy intensity
+       # 66, 67,     # Freezing Rain: Light and heavy intensity
+       # 71, 73, 75, # Snow fall: Slight, moderate, and heavy rain
+       # 77,         # Snow grains
+       # 80, 81, 82, # Rain showers: Slight, moderate, and violent
+       # 85, 86,     # Snow showers slight and heavy
+       # 95,         # Thunderstorm: Slight or moderate
+       # 96, 99      # Thunderstorm with slight and heavy hall
+    image_paths = []
+    code = data['current']['weather_code']
+    print(code)
+    match code:
+        case 0:
+            image_paths.append(url_for('static', 
+                                       filename='images/fill/darksky/clear-day.svg'))
+        case 1 | 2 | 3:
+            image_paths.append(url_for('static', 
+                                       filename='images/fill/darksky/cloudy.svg'))
+        case 45 | 48:
+            image_paths.append(url_for('static', 
+                                       filename='images/fill/darksky/fog.svg'))
+        case 51 | 53 | 55 | 56 | 57:
+            image_paths.append(url_for('static', 
+                                       filename='images/fill/darksky/drizzle.svg'))
+        case 61 | 63 | 65 | 66 | 67 | 80 | 81 | 82:
+            image_paths.append(url_for('static', 
+                                       filename='images/fill/darksky/rain.svg'))
+        case 71 | 73 | 75 | 77 | 85 | 86:
+            image_paths.append(url_for('static', 
+                                       filename='images/fill/darksky/snow.svg'))
+        case 95 | 96 | 99:
+            image_paths.append(url_for('static', 
+                                       filename='images/fill/darksky/thunderstorm.svg'))
+        case _:
+            image_paths.append(url_for('static', 
+                                       filename='images/filli/all/not-available.svg'))
+
+    return image_paths
 
 def weather_code_to_file(data):
        # 0,          # Clear sky
