@@ -4,7 +4,7 @@ let iterat = 0;
 
 
 function pyLoadHourly(city, lat, lon) {
-    fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKEY}&cnt=12`)
+    fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKEY}&cnt=12&units=imperial`)
     .then(res => res.json())
     .then(data => {
         var content = [];
@@ -19,9 +19,11 @@ function pyLoadHourly(city, lat, lon) {
             iterat++; 
             //console.log(currElem.sys.pod);
             const foreCastCard =`   <div class="card col-1">
-                                    <div class="card-body">${setWeatherIconOW(currElem.weather[0].id, currElem.sys.pod)}</img></div>
-                                    <div class="card-body">${elemUnix}</div>
-                                    <div class="card-body">${currElem.weather[0].description}</div></div>`;
+                                        <div class="card-body">${setWeatherIconOW(currElem.weather[0].id, currElem.sys.pod)}</img></div>
+                                        <div class="card-body">${elemUnix}</div>
+                                        <div class="card-body">${currElem.weather[0].description}</div>
+                                        <div class="card-body">${currElem.main.temp}°F</div>
+                                    </div>`;
             hourlyArr.push(foreCastCard);
         }
         hourlyDisplay.innerHTML = hourlyArr.join(""); 
