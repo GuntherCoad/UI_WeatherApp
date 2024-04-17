@@ -17,19 +17,19 @@
                 <img src="" class="img-fluid card-img-top mx-auto d-block" style="width: 50%;" id="image" alt="weather-code">
                 <div class="card-body">
                     <h5 class="card-title" id="pyCity">{{ city }}</h5>
-                    
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         Temperature: {{ today.current.temperature_2m }}°F
                     </li>
                     <li class="list-group-item">
+                        Feels like: {{today.current.apparent_temperature}}°F
+                    </li>
+                    <li class="list-group-item">
                         Humidity: {{ today.current.relative_humidity_2m }}%
                     </li>
                     <li class="list-group-item">
                         Wind Speed: {{ today.current.wind_speed_10m }}mph
-                    </li>
-                    <li class="list-group-item"> 
                     </li>
                 </ul>
             </div>
