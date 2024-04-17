@@ -1,5 +1,6 @@
-const apiKEY = "27eedd9e3f839130d3c83e4b0ed69202";
 
+const apiKEY = "27eedd9e3f839130d3c83e4b0ed69202";
+let iterat = 0;
 
 
 function pyLoadHourly(city, lat, lon) {
@@ -13,10 +14,12 @@ function pyLoadHourly(city, lat, lon) {
         for(element in content)
         {
             const currElem = content[element];
+            console.log(currElem)
             const elemUnix = timeConverter(currElem.dt);
-            console.log(content[element]);
+            iterat++; 
+            console.log(currElem.sys.pod);
             const foreCastCard =`   <div class="card col-1">
-                                    <div class="card-body"></div>
+                                    <div class="card-body">${setWeatherIconOW(currElem.weather[0].id)}</img></div>
                                     <div class="card-body">${elemUnix}</div>
                                     <div class="card-body">${currElem.weather[0].description}</div></div>`;
             hourlyArr.push(foreCastCard);
@@ -26,25 +29,57 @@ function pyLoadHourly(city, lat, lon) {
     .catch(error => console.error(error));
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // var tempEl = document.getElementById('today-temp');
-    var codeEl= document.getElementById('today-code');
-    var isDayEl= document.getElementById('isDay');
+function setWeatherIconOW (weatherID) {
+    const code = Math.trunc(weatherID / 100);
+    switch(code)
+    {
+        case 2:
+            return `<img src="/static/images/fill/all/thunderstorms-rain.svg">`;
+        case 3:
+            return `<img src="/static/images/fill/all/drizzle.svg">`;
+        case 5:
+            return `<img src="/static/images/fill/all/rain.svg">`;
+        case 6:
+            return `<img src="/static/images/fill/all/snow.svg">`;
+        case 7:
+            switch(weatherID)
+            {
+                case 701:
+                    return `<img src="/static/images/fill/all/mist.svg">`;
+                case 711:
+                    return `<img src="/static/images/fill/all/smoke.svg">`;
+                case 721:
+                    return `<img src="/static/images/fill/all/haze.svg">`;
+                case 731:
+                    return `<img src="/static/images/fill/all/dust.svg">`;
+                case 741:
+                    return `<img src="/static/images/fill/all/fog.svg">`;
+                case 781:
+                    return `<img src="/static/images/fill/all/tornado.svg">`;
+                default:
+                    return `<img src="/static/images/fill/all/mist.svg">`;
+            }
+        case 8:
+            switch(weatherID)
+            {
+                case 800:
+                    return `<img src="/static/images/fill/all/clear-day.svg">`;
+                case 801:
+                case 802:
+                    return `<img src="/static/images/fill/all/partly-cloudy-day.svg">`;
+                case 803:
+                case 804:
+                    return `<img src="/static/images/fill/all/cloudy.svg">`;
 
-    // var temp = parseFloat(tempEl.textContent.trim());
-    var wcode = parseInt(codeEl.textContent.trim());
-    var is_day= parseInt(isDayEl.textContent.trim());
+            }
+            
+        default:
+            return "no image available";
+    }
+}
 
-    // console.log(temp);
-    console.log(wcode);
-    console.log(is_day);
-
-    var imgEl= document.getElementById('image');
-    const cityName = document.getElementById('pyCity');
-    const lat = document.getElementById('latitude').textContent;
-    const lon = document.getElementById('longitude').textContent;
-    console.log(cityName.innerText + ', lat: ' + lat + ' , lon: ' + lon);
-
+function setWeatherIconMeteo(imgEl, wcode, is_day)
+{
     switch (wcode) {
         case 1:
         case 2:
@@ -83,36 +118,34 @@ document.addEventListener('DOMContentLoaded', function() {
         default:
             imgEl.src = '/static/images/fill/darksky/clear-day.svg';
     }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    // var tempEl = document.getElementById('today-temp');
+    var codeEl= document.getElementById('today-code');
+    var isDayEl= document.getElementById('isDay');
+
+    // var temp = parseFloat(tempEl.textContent.trim());
+    var wcode = parseInt(codeEl.textContent.trim());
+    var is_day= parseInt(isDayEl.textContent.trim());
+
+    // console.log(temp);
+    console.log(wcode);
+    console.log(is_day);
+
+    var todayIMG= document.getElementById('image');
+    const cityName = document.getElementById('pyCity');
+    const lat = document.getElementById('latitude').textContent;
+    const lon = document.getElementById('longitude').textContent;
+
+    setWeatherIconMeteo(todayIMG, wcode, is_day);
+    
     pyLoadHourly(cityName, lat, lon);
-});
+}, "false");
 
 function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
     var time = a.toLocaleTimeString('en-US', {timeStyle: "short"});
     return time;
   }
-  
-  function loadHourlyWeather(lat, lon) {
-    fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKEY}&cnt=5`)
-    .then(res => res.json())
-    .then(data => {
-        var content = [];
-        var forecastArr = [];
-        const forDisplay = document.getElementById("forecastDisplay");
-        content = data.list;
-        for(element in content)
-        {
-            const currElem = content[element];
-            const elemUnix = timeConverter(currElem.dt);
-            console.log(content[element]);
-            const foreCastCard =`   <div class="card col-1">
-                                    <div class="card-body">${setWeatherIcon(currElem.weather[0].id)}</div>
-                                    <div class="card-body">${elemUnix}</div>
-                                    <div class="card-body">${currElem.weather[0].description}</div></div>`;
-            forecastArr.push(foreCastCard);
-        }
-        forDisplay.innerHTML = forecastArr.join("");
-      
-    })
-    .catch(error => console.error(error));
-}
