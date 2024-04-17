@@ -5,7 +5,7 @@ from config import API_WEATHER_URL, GEO_CODE
 from location import get_current_location
 from datetime import datetime as dt
 from flask import (
-    Blueprint, render_template, request, 
+    Blueprint, render_template, request, url_for
 )
 
 gn = geocoders.GeoNames(username=GEO_CODE)
@@ -32,6 +32,7 @@ def home():
         city, lati, long = get_lat_long(city)
   
     data = get_forecast(lati, long)
+    image_paths = weather_code_to_file(data)
     print(city, file=sys.stderr)
     if data:
         return render_template('overview.html', 
@@ -40,10 +41,55 @@ def home():
                                days=data['daily']['time'],
                                city=city, 
                                dow=data['daily']['day_of_week'],
+                               images=image_paths,
                                navdate=navdate,
                                zip=zip)
     else:
         return "Failed toretrieve data"
+
+def weather_code_to_file(data):
+       # 0,          # Clear sky
+       # 1, 2, 3,    # Mainly clear, partly cloudy, and overcast
+       # 45, 48,     # Fog and depositing rime fog
+       # 51, 53, 55, # Drizzle: Light, moderate, and dense intensity
+       # 56, 57,     # Freezing Drizzle: Light and dense intensity
+       # 61, 63, 65, # Rain: Slight, moderate and heavy intensity
+       # 66, 67,     # Freezing Rain: Light and heavy intensity
+       # 71, 73, 75, # Snow fall: Slight, moderate, and heavy rain
+       # 77,         # Snow grains
+       # 80, 81, 82, # Rain showers: Slight, moderate, and violent
+       # 85, 86,     # Snow showers slight and heavy
+       # 95,         # Thunderstorm: Slight or moderate
+       # 96, 99      # Thunderstorm with slight and heavy hall
+    image_paths = []
+    for code in data['daily']['weather_code']:
+        match code:
+            case 0:
+                image_paths.append(url_for('static', 
+                                           filename='images/fill/darksky/clear-day.svg'))
+            case 1 | 2 | 3:
+                image_paths.append(url_for('static', 
+                                           filename='images/fill/darksky/cloudy.svg'))
+            case 45 | 48:
+                image_paths.append(url_for('static', 
+                                           filename='images/fill/darksky/fog.svg'))
+            case 51 | 53 | 55 | 56 | 57:
+                image_paths.append(url_for('static', 
+                                           filename='images/fill/darksky/drizzle.svg'))
+            case 61 | 63 | 65 | 66 | 67 | 80 | 81 | 82:
+                image_paths.append(url_for('static', 
+                                           filename='images/fill/darksky/rain.svg'))
+            case 71 | 73 | 75 | 77 | 85 | 86:
+                image_paths.append(url_for('static', 
+                                           filename='images/fill/darksky/snow.svg'))
+            case 95 | 96 | 99:
+                image_paths.append(url_for('static', 
+                                           filename='images/fill/darksky/thunderstorm.svg'))
+            case _:
+                image_paths.append(url_for('static', 
+                                           filename='images/filli/all/not-available.svg'))
+
+    return image_paths
 
 @bp.route('/daily', methods=('GET', 'POST'))
 def forecast():
