@@ -1,3 +1,31 @@
+const apiKEY = "27eedd9e3f839130d3c83e4b0ed69202";
+
+
+
+function pyLoadHourly(city, lat, lon) {
+    fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKEY}&cnt=12`)
+    .then(res => res.json())
+    .then(data => {
+        var content = [];
+        var hourlyArr = [];
+        const hourlyDisplay = document.getElementById('hourly-view')
+        content = data.list;
+        for(element in content)
+        {
+            const currElem = content[element];
+            const elemUnix = timeConverter(currElem.dt);
+            console.log(content[element]);
+            const foreCastCard =`   <div class="card col-1">
+                                    <div class="card-body"></div>
+                                    <div class="card-body">${elemUnix}</div>
+                                    <div class="card-body">${currElem.weather[0].description}</div></div>`;
+            hourlyArr.push(foreCastCard);
+        }
+        hourlyDisplay.innerHTML = hourlyArr.join(""); 
+    })
+    .catch(error => console.error(error));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // var tempEl = document.getElementById('today-temp');
     var codeEl= document.getElementById('today-code');
@@ -12,6 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(is_day);
 
     var imgEl= document.getElementById('image');
+    const cityName = document.getElementById('pyCity');
+    const lat = document.getElementById('latitude').textContent;
+    const lon = document.getElementById('longitude').textContent;
+    console.log(cityName.innerText + ', lat: ' + lat + ' , lon: ' + lon);
 
     switch (wcode) {
         case 1:
@@ -51,4 +83,36 @@ document.addEventListener('DOMContentLoaded', function() {
         default:
             imgEl.src = '/static/images/fill/darksky/clear-day.svg';
     }
+    pyLoadHourly(cityName, lat, lon);
 });
+
+function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var time = a.toLocaleTimeString('en-US', {timeStyle: "short"});
+    return time;
+  }
+  
+  function loadHourlyWeather(lat, lon) {
+    fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKEY}&cnt=5`)
+    .then(res => res.json())
+    .then(data => {
+        var content = [];
+        var forecastArr = [];
+        const forDisplay = document.getElementById("forecastDisplay");
+        content = data.list;
+        for(element in content)
+        {
+            const currElem = content[element];
+            const elemUnix = timeConverter(currElem.dt);
+            console.log(content[element]);
+            const foreCastCard =`   <div class="card col-1">
+                                    <div class="card-body">${setWeatherIcon(currElem.weather[0].id)}</div>
+                                    <div class="card-body">${elemUnix}</div>
+                                    <div class="card-body">${currElem.weather[0].description}</div></div>`;
+            forecastArr.push(foreCastCard);
+        }
+        forDisplay.innerHTML = forecastArr.join("");
+      
+    })
+    .catch(error => console.error(error));
+}

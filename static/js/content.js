@@ -180,11 +180,25 @@ function loadWeeklyWeather(lat, lon) {
     .catch(error => console.error(error));
 }
 
-searchButton.addEventListener('click', function() {
-    getSearchResults(5);
-    onSearch();
-}, false);
+const pyCity = document.getElementById("pyCity");
 
-query.addEventListener('keyup', function() {
-    getSearchResults(5);
-}, false);
+function pyLoadHourly(city) {
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city.value}&limit=1&appid=${apiKEY}`)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+      
+    })
+    .catch(error => console.error(error));
+}
+
+// searchButton.addEventListener('click', function() {
+//     getSearchResults(5);
+//     onSearch();
+// }, false);
+
+// query.addEventListener('keyup', function() {
+//     getSearchResults(5);
+// }, false);
+
+pyLoadHourly(pyCity);

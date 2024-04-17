@@ -10,13 +10,13 @@
 
 {% block content %}
 {% if today %}
-<div class="container mx-auto">
+<div class="container mx-auto"><!--prob also hold the hourly--> 
     <div class="row">
         <div class="col-sm">
             <div class="card">
                 <img src="" class="img-fluid card-img-top text-center" style="width: 50%;" id="image" alt="weather-code">
                 <div class="card-body">
-                    <h5 class="card-title">{{ city }}</h5>
+                    <h5 class="card-title" id="pyCity">{{ city }}</h5>
                     <p id="isDay" class="card-text">{{ today.current.is_day }}</p>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -36,7 +36,13 @@
             </div>
         </div>
     </div>
+    <div class="hidden-content">
+        <p id="latitude">{{ today.latitude }}</p>
+        <p id="longitude">{{ today.longitude }}</p>
+    </div>
+    <div id="hourly-view">
+
+    </div>
     {% endif %}
 </div>
-<script src="{{ url_for('static', filename='js/today.js') }}"></script>
 {% endblock %}
