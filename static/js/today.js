@@ -11,6 +11,8 @@ function pyLoadHourly(city, lat, lon) {
         var hourlyArr = [];
         const hourlyDisplay = document.getElementById('hourly-view')
         content = data.list;
+        setMinMax(content[0].main)
+
         for(element in content)
         {
             const currElem = content[element];
@@ -30,6 +32,14 @@ function pyLoadHourly(city, lat, lon) {
         hourlyDisplay.innerHTML = hourlyArr.join(""); 
     })
     .catch(error => console.error(error));
+}
+
+function setMinMax(main)
+{
+    const minMax = document.getElementById('min-max-temp')
+
+    minMax.innerHTML = `Low: ${Math.round(main.temp_min)}°F \tHi: ${Math.round(main.temp_max)}°F`
+
 }
 
 function setWeatherIconOW (weatherID, POD) {
