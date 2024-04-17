@@ -140,7 +140,7 @@ def get_forecast(latitude, longitude):
     weather_data = response.json()
     convert_date(weather_data)
     add_day_of_week(weather_data)
-    print(weather_data)
+    #print(weather_data)
     return weather_data
 
 def convert_date(data):
