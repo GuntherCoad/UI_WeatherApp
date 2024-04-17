@@ -11,8 +11,8 @@ function pyLoadHourly(city, lat, lon) {
         var hourlyArr = [];
         const hourlyDisplay = document.getElementById('hourly-view')
         content = data.list;
-        setMinMax(content[0].main)
-
+        setMinMax(content[0].main);
+        fetchAQIData(lat, lon);
         for(element in content)
         {
             const currElem = content[element];
@@ -180,3 +180,35 @@ function timeConverter(UNIX_timestamp){
     var time = a.toLocaleTimeString('en-US', {timeStyle: "short"});
     return time;
   }
+
+  function fetchAQIData(lat, lon){
+    fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKEY}`)
+        .then(res => res.json())
+        .then(aqiData => {
+            const aqi = document.getElementById("AQI");
+            aqi.innerText = `AQI: ${aqiData.list[0].main.aqi}, ${AQIRelativeTerm(aqiData.list[0].main.aqi)}`;
+        })
+        .catch(error => console.error('Error fetching AQI data:', error));AnalyserNode
+}
+
+/**
+ * @description takes the AQI number as an input and outputs a qualitative name for that level of air quality
+ * @link https://openweathermap.org/api/air-pollution
+ */
+function AQIRelativeTerm (AQIlevel){
+    switch(AQIlevel)
+    {
+        case 1:
+            return "Good";
+        case 2:
+            return "Fair";
+        case 3:
+            return "Moderate";
+        case 4:
+            return "Poor";
+        case 5:
+            return "Very Poor";
+        default:
+            return "";
+    }
+}
