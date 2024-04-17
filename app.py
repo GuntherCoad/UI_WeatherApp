@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
         
 def create_app(test_config=None):
 
@@ -6,8 +6,8 @@ def create_app(test_config=None):
 
 
     @app.route("/")
-    def home():
-        return render_template("index.html")
+    def index():
+        return redirect('/weather')
 
     import weather
     app.register_blueprint(weather.bp)
