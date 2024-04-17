@@ -17,9 +17,9 @@ function pyLoadHourly(city, lat, lon) {
             console.log(currElem)
             const elemUnix = timeConverter(currElem.dt);
             iterat++; 
-            console.log(currElem.sys.pod);
+            //console.log(currElem.sys.pod);
             const foreCastCard =`   <div class="card col-1">
-                                    <div class="card-body">${setWeatherIconOW(currElem.weather[0].id)}</img></div>
+                                    <div class="card-body">${setWeatherIconOW(currElem.weather[0].id, currElem.sys.pod)}</img></div>
                                     <div class="card-body">${elemUnix}</div>
                                     <div class="card-body">${currElem.weather[0].description}</div></div>`;
             hourlyArr.push(foreCastCard);
@@ -29,12 +29,15 @@ function pyLoadHourly(city, lat, lon) {
     .catch(error => console.error(error));
 }
 
-function setWeatherIconOW (weatherID) {
+function setWeatherIconOW (weatherID, POD) {
     const code = Math.trunc(weatherID / 100);
     switch(code)
     {
         case 2:
-            return `<img src="/static/images/fill/all/thunderstorms-rain.svg">`;
+            if(POD == "d")
+                return `<img src="/static/images/fill/all/thunderstorms-rain.svg">`;
+            else
+            return `<img src="/static/images/fill/all/thunderstorms-night-rain.svg">`;
         case 3:
             return `<img src="/static/images/fill/all/drizzle.svg">`;
         case 5:
@@ -49,11 +52,20 @@ function setWeatherIconOW (weatherID) {
                 case 711:
                     return `<img src="/static/images/fill/all/smoke.svg">`;
                 case 721:
-                    return `<img src="/static/images/fill/all/haze.svg">`;
+                    if(POD == "d") 
+                        return `<img src="/static/images/fill/all/haze-day.svg">`;
+                    else
+                    return `<img src="/static/images/fill/all/haze-night.svg">`;
                 case 731:
-                    return `<img src="/static/images/fill/all/dust.svg">`;
+                    if(POD == "d")
+                        return `<img src="/static/images/fill/all/dust-day.svg">`;
+                    else
+                    return `<img src="/static/images/fill/all/dust-night.svg">`;
                 case 741:
-                    return `<img src="/static/images/fill/all/fog.svg">`;
+                    if(POD == "d")
+                        return `<img src="/static/images/fill/all/fog-day.svg">`;
+                    else
+                        return `<img src="/static/images/fill/all/fog-night.svg">`;
                 case 781:
                     return `<img src="/static/images/fill/all/tornado.svg">`;
                 default:
@@ -63,10 +75,16 @@ function setWeatherIconOW (weatherID) {
             switch(weatherID)
             {
                 case 800:
-                    return `<img src="/static/images/fill/all/clear-day.svg">`;
+                    if(POD == "d")
+                        return `<img src="/static/images/fill/all/clear-day.svg">`;
+                    else
+                        return `<img src="/static/images/fill/all/clear-night.svg">`;
                 case 801:
                 case 802:
-                    return `<img src="/static/images/fill/all/partly-cloudy-day.svg">`;
+                    if(POD == "d")
+                        return `<img src="/static/images/fill/all/partly-cloudy-day.svg">`;
+                    else
+                        return `<img src="/static/images/fill/all/partly-cloudy-night.svg">`;
                 case 803:
                 case 804:
                     return `<img src="/static/images/fill/all/cloudy.svg">`;
