@@ -49,8 +49,8 @@ def home():
 def forecast():
     global lati, long, data
     if request.method == 'POST':
-        lati = request.form['latitude']
-        long = request.form['longitude']
+        city = request.form['city']
+        city, lati, long = get_lat_long(city)
     
     data = get_forecast(lati, long)
 
@@ -64,8 +64,8 @@ def forecast():
 def current():
     global lati, long, data, city
     if request.method == 'POST':
-        lati = request.form['latitude']
-        long = request.form['longitude']
+        city = request.form['city']
+        city, lati, long = get_lat_long(city)
 
     data = get_forecast(lati, long)
     

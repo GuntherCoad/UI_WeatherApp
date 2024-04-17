@@ -13,21 +13,21 @@
 <div class="container mx-auto"><!--prob also hold the hourly--> 
     <div class="row">
         <div class="col-sm">
-            <div class="card">
-                <img src="" class="img-fluid card-img-top text-center" style="width: 50%;" id="image" alt="weather-code">
+            <div class="card mx-auto" style="width: 18rem;"">
+                <img src="" class="img-fluid card-img-top" style="width: 30%;" id="image" alt="weather-code">
                 <div class="card-body">
                     <h5 class="card-title" id="pyCity">{{ city }}</h5>
                     <p id="isDay" class="card-text">{{ today.current.is_day }}</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        Temperature (F): {{ today.current.temperature_2m }}
+                        Temperature: {{ today.current.temperature_2m }}°F
                     </li>
                     <li class="list-group-item">
-                        Humidity (%): {{ today.current.relative_humidity_2m }}
+                        Humidity: {{ today.current.relative_humidity_2m }}%
                     </li>
                     <li class="list-group-item">
-                        Wind Speed (mph): {{ today.current.wind_speed_10m }}
+                        Wind Speed: {{ today.current.wind_speed_10m }}mph
                     </li>
                     <li id="today-code" class="list-group-item">
                         {{ today.current.weather_code }}

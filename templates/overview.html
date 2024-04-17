@@ -15,13 +15,13 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
-            Temperature (F): {{ today.current.temperature_2m }}
+            Temperature: {{ today.current.temperature_2m }}°F
         </li>
         <li class="list-group-item">
-            Humidity (%): {{ today.current.relative_humidity_2m }}
+            Humidity: {{ today.current.relative_humidity_2m }}%
         </li>
         <li class="list-group-item">
-            Wind Speed (mph): {{ today.current.wind_speed_10m }}
+            Wind Speed: {{ today.current.wind_speed_10m }}mph
         </li>
     </ul>
     <div class="card-body">
@@ -46,8 +46,8 @@
                     <p class="card-text">{{ day }}</p>
                 </div>
                 <ul class="list-group list-group-flush text-center">
-                    <li class="list-group-item">High (F): {{ max_temp }}</li>
-                    <li class="list-group-item">Low (F): {{ min_temp }}</li>
+                    <li class="list-group-item">High: {{ max_temp }}°F</li>
+                    <li class="list-group-item">Low: {{ min_temp }}°F</li>
                 </ul>
                 <div class="card-body text-center">
                     <a href="/weather/today" class="card-link">More info</a>
