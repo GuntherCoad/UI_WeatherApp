@@ -12,7 +12,6 @@
 <br>
 </div>
 
-<<<<<<< HEAD
 <div class="accordion" id="accordionPanelsStayOpenExample">
     <div class="accordion-item">
       <h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -22,23 +21,12 @@
       </h2>
       <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
         <div class="accordion-body">
-=======
-<div class="container">
-<h2>Daily Forecast</h2><br>
-    <div class="row">
-        {% for day, max_temp, min_temp, precip, max_wind, day_of_week, wcode, ipath in zip(days, 
-        forecast.temperature_2m_max, forecast.temperature_2m_min, 
-        forecast.precipitation_sum, forecast.windspeed_10m_max, dow, forecast.weather_code, images) %}
-        {% if loop.index0 != 6 %}
-        <div class="col-md-4 mb-md-3 mb-5">
->>>>>>> 7b7d1e7 (Add dynamic icons based on weather codes)
             <div class="card mx-auto" style="width: 18rem;">
-                <img src="{{ ipath }}" class="card-img=top" id="image" alt="weather-code">
+                <img src="{{ url_for('static', filename='images/fill/darksky/clear-day.svg') }}" class="card-img=top" id="image" alt="weather-code">
                 <div class="card-body">
                     <h5 class="card-title">{{city}}</h5>
                     <p class="card-text">Some quick example text.</p>
                 </div>
-<<<<<<< HEAD
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         Temperature: {{ today.current.temperature_2m }}°F
@@ -49,11 +37,6 @@
                     <li class="list-group-item">
                         Wind Speed: {{ today.current.wind_speed_10m }}mph
                     </li>
-=======
-                <ul class="list-group list-group-flush text-center">
-                    <li class="list-group-item">High (F): {{ max_temp }}</li>
-                    <li class="list-group-item">Low (F): {{ min_temp }} </li>
->>>>>>> 7b7d1e7 (Add dynamic icons based on weather codes)
                 </ul>
                 <div class="card-body">
                     <a href="/weather/today" class="card-link">More info</a>
