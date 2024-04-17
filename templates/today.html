@@ -5,7 +5,7 @@
 {% extends 'weather.html' %}
 
 {% block header %}
-<h1>{% block title %}Today's Forecast{% endblock %}</h1>
+<h1>{% block title %}Today's Forecast:{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -41,6 +41,9 @@
         <p id="isDay" >{{ today.current.is_day }}</p>
         <p id="today-code">{{ today.current.weather_code }}</p>
     </div>
+
+    <h1>Hourly Forecast:</h1><br>
+
     <div id="hourly-view" class="row">
 
     </div>
