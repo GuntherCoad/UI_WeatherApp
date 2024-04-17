@@ -55,13 +55,13 @@
       <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
         <div class="accordion-body">
             <div class="row">
-                {% for day, max_temp, min_temp, precip, max_wind, day_of_week in zip(days, 
+                {% for day, max_temp, min_temp, precip, max_wind, day_of_week, ipath in zip(days, 
                 forecast.temperature_2m_max, forecast.temperature_2m_min, 
-                forecast.precipitation_sum, forecast.windspeed_10m_max, dow) %}
+                forecast.precipitation_sum, forecast.windspeed_10m_max, dow, images) %}
                 {% if loop.index0 != 6 %}
                 <div class="col-md-4 mb-md-3 mb-5">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="{{ url_for('static', filename='images/fill/darksky/clear-day.svg') }}" class="card-img=top" id="image" alt="weather-code">
+                        <img src="{{ ipath }}" class="card-img=top" id="image" alt="weather-code">
                         <div class="card-body">
                             <h5 class="card-title">{{ day_of_week }}</h5>
                             <p class="card-text">{{ day }}</p>
