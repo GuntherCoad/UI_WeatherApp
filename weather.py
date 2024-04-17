@@ -88,7 +88,7 @@ def get_forecast(latitude, longitude):
         "wind_speed_unit": "mph",
         "precipitation_unit": "inch",
         "current": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "is_day", "precipitation", "rain", "showers", "snowfall", "weather_code", "cloud_cover", "pressure_msl", "surface_pressure", "wind_speed_10m", "wind_direction_10m", "wind_gusts_10m"],
-        "daily": ["temperature_2m_max", "temperature_2m_min", "precipitation_sum", "windspeed_10m_max"],
+        "daily": ["temperature_2m_max", "temperature_2m_min", "precipitation_sum", "windspeed_10m_max", "weather_code"],
     }
     response = requests.get(API_WEATHER_URL, params=params)
     weather_data = response.json()
