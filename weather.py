@@ -10,22 +10,27 @@ from flask import (
 
 gn = geocoders.GeoNames(username=GEO_CODE)
 bp = Blueprint('weather', __name__, url_prefix='/weather')
+
+#global city variable
+loc_data = get_current_location()
+lati = float(loc_data[0])
+long = float(loc_data[1])
+city = gn.reverse((lati, long))[0].split(',')[0]
+navdate = dt.now().strftime("%m/%d/%Y")
+#global data array for weather
+data = {}
+
+
 # TODO: Dynanic loading of card images based on weather_code.    
 # {{ # url_for('static', filename='images/weather/' + weather_code + '.svg') }} 
 @bp.route('/', methods=('GET', 'POST'))
 def home():
+    global city, lati, long, data
+
     if request.method == 'POST':
         city = request.form['city']
         city, lati, long = get_lat_long(city)
-
-        #lati = request.form['latitude']
-        #long = request.form['longitude']
-    else:
-        loc_data = get_current_location()
-        lati = float(loc_data[0])
-        long = float(loc_data[1])
-        city = gn.reverse((lati, long))[0].split(',')[0]
-    
+  
     data = get_forecast(lati, long)
     print(city, file=sys.stderr)
     if data:
@@ -35,38 +40,32 @@ def home():
                                days=data['daily']['time'],
                                city=city, 
                                dow=data['daily']['day_of_week'],
+                               navdate=navdate,
                                zip=zip)
     else:
         return "Failed toretrieve data"
 
 @bp.route('/daily', methods=('GET', 'POST'))
 def forecast():
+    global lati, long, data
     if request.method == 'POST':
         lati = request.form['latitude']
         long = request.form['longitude']
-    else:
-        loc_data = get_current_location()
-        lati = float(loc_data[0])
-        long = float(loc_data[1])
     
     data = get_forecast(lati, long)
 
     if data:
         return render_template('daily.html', forecast=data['daily'], 
-                           days=data['daily']['time'], zip=zip)
+                           days=data['daily']['time'], navdate=navdate, zip=zip)
     else:
         return "Failed toretrieve data"
 
 @bp.route('/today', methods=('GET', 'POST'))
 def current():
+    global lati, long, data, city
     if request.method == 'POST':
         lati = request.form['latitude']
         long = request.form['longitude']
-    else:
-        loc_data = get_current_location()
-        lati = float(loc_data[0])
-        long = float(loc_data[1])
-        city = gn.reverse((lati, long))[0].split(',')[0]
 
     data = get_forecast(lati, long)
     
@@ -79,7 +78,7 @@ def current():
     # # Add to array
     # data['current_weather']['temperature_fahrenheit'] = temp_fah
 
-    return render_template('today.html', today=data, city=city)
+    return render_template('today.html', today=data, city=city, navdate=navdate)
 
 def get_forecast(latitude, longitude):
     params = {
