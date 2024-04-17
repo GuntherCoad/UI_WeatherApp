@@ -34,6 +34,7 @@ def home():
                                forecast=data['daily'], 
                                days=data['daily']['time'],
                                city=city, 
+                               dow=data['daily']['day_of_week'],
                                zip=zip)
     else:
         return "Failed toretrieve data"
