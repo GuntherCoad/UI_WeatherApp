@@ -15,7 +15,9 @@ function pyLoadHourly(city, lat, lon) {
         {
             const currElem = content[element];
             console.log(currElem)
-            const elemUnix = timeConverter(currElem.dt);
+            let elemUnix = timeConverter(currElem.dt);
+            //just have the hour and the AM/PM
+            elemUnix = elemUnix.slice(0, elemUnix.length - 6) + elemUnix.slice(elemUnix.length - 3, elemUnix.length);
             iterat++; 
             //console.log(currElem.sys.pod);
             const foreCastCard =`   <div class="card col-1">
